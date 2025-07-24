@@ -2,7 +2,6 @@ MIME-Version: 1.0
 X-Document-Type: Workbook
 Content-Type: multipart/related; boundary="----=_NextPart_01D8DFBE.2078AF30"
 
-
 ##  1. DATA_SOURCES
 ##
 #########################################################################################################################
@@ -5303,6 +5302,15 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	<col class=xl165 width=182 style='mso-width-source:userset;mso-width-alt:5558;width:114pt'>
     <col class=xl68 width=100 span=2 style='width:75pt'>
 
+		#foreach ( $vDoc in $documentList )
+		#set ( $doc = $vDoc.document )
+		#set ( $docTypeid = $doc.documentType.id )
+			#if ($docTypeid == 33)
+				<tr><td>$doc.name</td></tr>
+				<tr><td>$doc.description</td></tr>
+				<tr><td></td></tr>
+			#end
+		#end
     ## Header Row
     <tr height=22 style='height:16.5pt;'>
       <td height=22 class=xl361 width=170 style='height:16.5pt;mso-ignore:colspan;width:128pt'>USE SCENARIO</td>
@@ -5317,8 +5325,8 @@ xmlns="http://www.w3.org/TR/REC-html40">
     </tr>
 
     ## Dynamic Content Rows (Exported Items)
-		#set ($firstFolder = 1)
-		#foreach ( $vDoc in $documentList )
+	#set ($firstFolder = 1)
+	#foreach ( $vDoc in $documentList )
 		#set ( $doc = $vDoc.document )
 		#set ( $docTypeid = $doc.documentType.id )
 
@@ -5422,24 +5430,31 @@ xmlns="http://www.w3.org/TR/REC-html40">
 		<col class=xl165 width=182 style='mso-width-source:userset;mso-width-alt:5558;width:114pt'>
 		<col class=xl68 width=100 span=2 style='width:75pt'>
 
+		#foreach ( $vDoc in $documentList )
+		#set ( $doc = $vDoc.document )
+		#set ( $docTypeid = $doc.documentType.id )
+			#if ($docTypeid == 33)
+				<tr><td>$doc.name</td></tr>
+				<tr><td>$doc.description</td></tr>
+				<tr><td></td></tr>
+			#end
+		#end
 		## Header Row
 		<tr height=22 style='height:16.5pt;'>
-		<td height=22 class=xl361 width=170 style='height:16.5pt;mso-ignore:colspan;width:128pt'>USE SCENARIO</td>
-		<td class=xl365 width=55 style='mso-ignore:colspan;text-align:center;border:2.0pt solid black;'>STEP<span style='mso-spacerun:yes'></span></td>
-		<td class=xl365 width=120 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS ID<span style='mso-spacerun:yes'></span></td>
-		<td class=xl365 width=707 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS<span style='mso-spacerun:yes'></span></td>
-		<td class=xl367 width=201 style='border-left:none;width:151pt;border:2.0pt solid black;'>USER</td>
-		<td class=xl368 width=170 style='width:128pt border:2.0pt solid black;'>USE ENVIRONMENT</td>
-		<td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>ASSOCIATED COMPONENT</td>
+			<td height=22 class=xl361 width=170 style='height:16.5pt;mso-ignore:colspan;width:128pt'>USE SCENARIO</td>
+			<td class=xl365 width=55 style='mso-ignore:colspan;text-align:center;border:2.0pt solid black;'>STEP<span style='mso-spacerun:yes'></span></td>
+			<td class=xl365 width=120 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS ID<span style='mso-spacerun:yes'></span></td>
+			<td class=xl365 width=707 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS<span style='mso-spacerun:yes'></span></td>
+			<td class=xl367 width=201 style='border-left:none;width:151pt;border:2.0pt solid black;'>USER</td>
+			<td class=xl368 width=170 style='width:128pt border:2.0pt solid black;'>USE ENVIRONMENT</td>
+			<td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>ASSOCIATED COMPONENT</td>
 		<td style='border-left:2.0pt solid black;'></td>
 		</tr>
 
 		## Dynamic Content Rows (Exported Items)
-			#foreach ( $vDoc in $documentList )
-			#set ( $doc = $vDoc.document )
-			#set ( $docTypeid = $doc.documentType.id )
-
-
+		#foreach ( $vDoc in $documentList )
+		#set ( $doc = $vDoc.document )
+		#set ( $docTypeid = $doc.documentType.id )
 			#if ($docTypeid == 32)
 				
 			## Level 1 children
