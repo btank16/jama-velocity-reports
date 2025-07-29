@@ -1,0 +1,1717 @@
+MIME-Version: 1.0
+X-Document-Type: Workbook
+Content-Type: multipart/related; boundary="----=_NextPart_01D8DFBE.2078AF30"
+
+##  1. DATA_SOURCES
+##
+#########################################################################################################################
+##
+## Data Sources available without declaration
+##-------------------------------------------
+## $format
+## $project
+## $documentList
+## $baseUrl
+## $contextType
+## $contextId
+## $report_name
+##
+## Data Sources loaded for this report
+##-------------------------------------------
+#if( $documentSource ) ##
+  ## Jama 8.44 or greater
+  ## Jama 8.42 if New Velocity Feature Flag Enabled
+  #set( $docDao = $documentSource )
+  #set( $documentNodeDao = $documentSource )
+  #set( $attachmentDao = $documentSource )
+  #set( $attachmentService = $documentSource )
+  #set( $docTypeFieldDao = $documentSource )
+  #set( $relDao = $documentSource )
+  #set( $versionDao = $documentSource )
+  #set( $testRunDao = $testSource )
+  #set( $testPlanDao = $testSource)
+  #set( $testSetDao = $testSource)
+  #set( $testCycleDao = $testSource)
+  #set( $velocityServiceWrapper = $documentSource )
+  #set( $baselineDao = $baselineSource )
+  #set( $contourItemDao = $documentSource )
+  #set( $userDao = $userSource )
+  #set( $lookupDao = $documentSource )
+#else
+  ## Jama 8.43 or older
+  ## Jama 8.43 or older ## Zoll is version 8.42.1 without the Velocity Feature Flag Enabled
+  #set( $contourItemDao = $applicationContext.getBean("contourItemDao"))
+  #set( $docDao = $applicationContext.getBean("documentDao"))
+  #set( $documentNodeDao = $applicationContext.getBean("documentNodeDao"))
+  #set( $attachmentDao = $applicationContext.getBean("attachmentDao"))
+  #set( $attachmentService = $applicationContext.getBean("attachmentService"))
+  #set( $relDao = $applicationContext.getBean("relationshipDao") )
+  #set( $versionDao = $applicationContext.getBean("versionDao") )
+  #set( $testRunDao = $applicationContext.getBean("testRunDao") )
+  #set( $testPlanDao = $applicationContext.getBean("testPlanDao"))
+  #set( $testSetDao = $applicationContext.getBean("testSetDao"))
+  #set( $testCycleDao = $applicationContext.getBean("testCycleDao"))
+  #set( $userDao = $applicationContext.getBean("userDao"))
+  #set( $baselineDao = $applicationContext.getBean("baseLineDao") )
+##
+#end
+##
+
+## Report Parameters
+##-------------------------------------------
+
+#if($!contextType && $contextType.toUpperCase().contains("BASELINE") )
+  #set( $baselineMode = true)
+  #set( $baselineId = $mathTool.toInteger($contextId))
+  #set( $reportBaseline = $baselineDao.getBaseLine( $baselineId ))
+#else
+  #if( $reportBaseline )
+    #set( $baselineMode = $reportBaseline )
+  #else
+    #set( $baselineMode = false )
+  #end
+#end
+
+
+#if( $reportTestRuns )
+  #set( $testRunMode = $reportTestRuns )
+#else
+  #set( $testRunMode = false )
+#end
+##
+##
+##
+## Report Constants 
+## -------------------------------------------
+#set( $cmpKey = "CMP") ##
+#set( $setKey = "SET") ##
+#set( $fldKey = "FLD") ##
+#set( $txtKey = "TXT") ##
+#set( $objectTypeField = "object_type" ) ##
+#set( $timeZone = "America/Los_Angeles" ) ##
+##
+## 
+#########################################################################################################################
+
+
+
+
+
+#########################################################################################################################
+##
+##  HEAD 
+##
+#########################################################################################################################
+
+#* Replace the ExcelWorksheet x:Name "Report Name" to correspond with the name of your worksheet Tab
+That is all you need to change within the head tags *#
+
+------=_NextPart_01D8DFBE.2078AF30
+Content-Location: file:///C:/61233B10/Single_Sheet_Mockup.htm
+Content-Type: text/html; charset="utf-8"
+
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta name="Excel Workbook Frameset">
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 15">
+<link rel=File-List href="Single_Sheet_Mockup_files/filelist.xml">
+<![if !supportTabStrip]>
+<link id="shLink" href="Single_Sheet_Mockup_files/sheet001.htm">
+
+<link id="shLink">
+<![endif]><!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>Report Name</x:Name>
+    <x:WorksheetSource HRef="Single_Sheet_Mockup_files/sheet001.htm"/>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+  <x:Stylesheet HRef="Single_Sheet_Mockup_files/stylesheet.css"/>
+  <x:WindowHeight>12165</x:WindowHeight>
+  <x:WindowWidth>27435</x:WindowWidth>
+  <x:WindowTopX>930</x:WindowTopX>
+  <x:WindowTopY>32767</x:WindowTopY>
+  <x:ProtectStructure>False</x:ProtectStructure>
+  <x:ProtectWindows>False</x:ProtectWindows>
+ </x:ExcelWorkbook>
+</xml><![endif]-->
+</head>
+</html>
+
+#########################################################################################################################
+##
+##  STYLES 
+##
+#########################################################################################################################
+------=_NextPart_01D8DFBE.2078AF30
+Content-Location: file:///C:/61233B10/Single_Sheet_Mockup_files/stylesheet.css
+Content-Type: text/css; charset="utf-8"
+
+#* Paste your styles here, replacing the styles in this template. You do not need the opening and closing style tags. 
+The styles are found by the template via the boundary and "Content-Location" *#
+tr
+  {mso-height-source:auto;}
+col
+  {mso-width-source:auto;}
+br
+  {mso-data-placement:same-cell;}
+.style0
+  {mso-number-format:General;
+  text-align:left;
+  vertical-align:top;
+  white-space:nowrap;
+  mso-rotate:0;
+  mso-background-source:auto;
+  mso-pattern:auto;
+  color:black;
+  font-size:11.0pt;
+  font-weight:400;
+  font-style:normal;
+  text-decoration:none;
+  font-family:Calibri, sans-serif;
+  mso-font-charset:0;
+  border:none;
+  mso-protection:locked visible;
+  mso-style-name:Normal;
+  mso-style-id:0;}
+td
+  {mso-style-parent:style0;
+  padding-top:1px;
+  padding-right:1px;
+  padding-left:1px;
+  mso-ignore:padding;
+  color:black;
+  font-size:11.0pt;
+  font-weight:400;
+  font-style:normal;
+  text-decoration:none;
+  font-family:Calibri, sans-serif;
+  mso-font-charset:0;
+  mso-number-format:General;
+  text-align:left;
+  vertical-align:top;
+  border:none;
+  mso-background-source:auto;
+  mso-pattern:auto;
+  mso-protection:locked visible;
+  white-space:normal;
+  mso-rotate:0;}
+.xl65
+  {mso-style-parent:style0;
+  background:white;
+  mso-pattern:black none;}
+.xl66
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
+	background:#BFBFBF;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl67
+	{mso-style-parent:style0;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	white-space:normal;}
+.xl68
+  {mso-style-parent:style0;
+  color:black;
+  text-align:center;
+  vertical-align:center;
+  border: 1px solid black;
+  white-space:normal;}
+.xl69
+	{mso-style-parent:style0;
+	text-align:center;
+	white-space:normal;}
+.xl70
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	text-align:left;
+	white-space:normal;}
+.xl71
+	{mso-style-parent:style0;
+	text-align:center;}
+.xl72
+	{mso-style-parent:style0;
+	font-size:10.0pt;
+	text-align:left;
+	vertical-align:top;
+	white-space:normal;}
+.xl73
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	white-space:normal;}
+.xl74
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;
+	white-space:normal;}
+.xl75
+	{mso-style-parent:style0;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;}
+.xl76
+	{mso-style-parent:style0;
+	font-size:26.0pt;
+	font-weight:700;
+	text-align:left;
+	vertical-align:middle;}
+.xl77
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	border-top:.5pt solid black;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;
+	white-space:normal;}
+.xl78
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	text-align:left;
+	vertical-align:top;}
+.xl79
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	text-align:left;}
+.xl80
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	text-align:center;
+	white-space:normal;}
+.xl81
+	{mso-style-parent:style0;
+	font-size:22.0pt;
+	text-align:left;
+	white-space:normal;}
+.xl82
+	{mso-style-parent:style0;
+	text-align:left;}
+.xl83
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:top;}
+.xl84
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl85
+	{mso-style-parent:style0;
+	color:#1F497D;
+	font-size:20.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl86
+	{mso-style-parent:style0;
+	color:#1F497D;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl87
+	{mso-style-parent:style0;
+	color:#1F497D;
+	font-size:14.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	white-space:normal;}
+.xl88
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	font-weight:700;}
+.xl89
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;}
+.xl90
+	{mso-style-parent:style0;
+	font-weight:700;}
+.xl91
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	font-weight:700;
+	text-align:center;
+	white-space:normal;}
+.xl92
+	{mso-style-parent:style0;
+	color:#C00000;
+	font-size:28.0pt;
+	text-align:left;
+	vertical-align:top;
+	white-space:normal;}
+.xl93
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:top;
+	white-space:normal;}
+.xl94
+	{mso-style-parent:style0;
+	font-size:14.0pt;}
+.xl95
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl96
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl97
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	white-space:normal;}
+.xl98
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	text-align:left;
+	vertical-align:middle;}
+.xl99
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl100
+	{mso-style-parent:style0;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl101
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	white-space:normal;}
+.xl102
+	{mso-style-parent:style0;
+	vertical-align:middle;}
+.xl103
+	{mso-style-parent:style0;
+	text-align:center;
+	vertical-align:middle;}
+.xl104
+	{mso-style-parent:style0;
+	font-size:22.0pt;
+	text-align:left;
+	vertical-align:middle;
+	white-space:normal;}
+.xl105
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:middle;}
+.xl106
+	{mso-style-parent:style0;
+	font-size:10.0pt;
+	text-align:left;
+	vertical-align:middle;
+	white-space:normal;}
+.xl107
+	{mso-style-parent:style0;
+	font-size:28.0pt;
+	font-weight:700;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	vertical-align:middle;}
+.xl108
+	{mso-style-parent:style0;
+	font-size:16.0pt;}
+.xl109
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	border:.5pt solid black;
+	background:#D9D9D9;
+	mso-pattern:black none;}
+.xl110
+	{mso-style-parent:style0;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:none;
+	border-left:.5pt solid black;}
+.xl111
+	{mso-style-parent:style0;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl112
+	{mso-style-parent:style0;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
+	white-space:normal;}
+.xl113
+	{mso-style-parent:style0;
+	vertical-align:middle;
+	white-space:normal;}
+.xl114
+	{mso-style-parent:style0;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;}
+.xl115
+	{mso-style-parent:style0;
+	text-align:center;
+	border:.5pt solid black;
+	white-space:normal;}
+.xl116
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;}
+.xl117
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+.xl118
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+.xl119
+	{mso-style-parent:style0;
+	font-size:26.0pt;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;}
+.xl120
+	{mso-style-parent:style0;
+	font-size:26.0pt;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+.xl121
+	{mso-style-parent:style0;
+	font-size:26.0pt;
+	font-weight:700;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+.xl122
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:.5pt solid black;}
+.xl123
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:none;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+.xl124
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	text-align:center;
+	border-top:.5pt solid black;
+	border-right:.5pt solid black;
+	border-bottom:.5pt solid black;
+	border-left:none;}
+
+#########################################################################################################################
+##
+##  MACROS
+##
+#########################################################################################################################
+##
+#########################################################################################################################
+#########################################################################################################################
+##          Macro: formatRichTextCell
+##          Desc: Use on purely textual Rich Text Fields (I.e use directly in Cells)
+##          Input: $inString - input string
+##          Return: string, ready for opening in Word
+#########################################################################################################################
+#macro( formatRichTextCell $inString )
+  #if( $inString )
+    #set( $string = $inString.toString() )
+    
+    #set( $string = $string.replaceAll("<div.*?>|<\/div>",""))
+    #set( $string = $string.replaceAll("<html.*?>|<html>", ""))
+    #set( $string = $string.replaceAll("<span.*?>|<\/span>", ""))
+
+    ## remove images ## 
+    #set( $string = $string.replaceAll("<p.*?><img.*?><\/p>", ""))
+    #set( $string = $string.replaceAll("<img.*?>",""))
+    #set( $string = $string.replaceAll("<figure.*?>|<\/figure>", ""))
+    #set( $string = $string.replaceAll("<svg.*?>|<\/svg>", ""))
+    ## figure captions should not cause issue, replace at user discretion
+    #set( $string = $string.replaceAll("<figcaption.*?>|<\/figcaption>",""))
+
+    ## remove tables ## 
+    #set( $string = $string.replaceAll("<table.*?>|<\/table>",""))
+    #set( $string = $string.replaceAll("<col.*?>|<\/col>", ""))
+    #set( $string = $string.replaceAll("<tbody.*?>|<\/tbody>",""))
+    #set( $string = $string.replaceAll("<thead.*?>|<\/thead>",""))
+    #set( $string = $string.replaceAll("<th.*?>(?:.|\s)*?<\/th>", ""))
+    #set( $string = $string.replaceAll("<th.*?>|<\/th>", ""))
+    #set( $string = $string.replaceAll("<tr.*?>|<\/tr>",""))
+    #set( $string = $string.replaceAll("<td.*?>(?:.|\s)*?<\/td>", ""))
+    #set( $string = $string.replaceAll("<td.*?>|<\/td>", ""))
+    #set( $string = $string.replaceAll("<tfoot.*?>|<\/tfoot>",""))
+    #set( $string = $string.replaceAll("<caption.*?>|<\/caption>",""))
+
+    ## remove link tags
+    #set( $string = $string.replaceAll("<\/?(a).*?>",""))
+
+    ## replace list tags with a restructured list via <br>s and the bullet html entity
+    #set( $string = $string.replaceAll("<ul.*?>","<br>"))
+    #set( $string = $string.replaceAll("<ol>","<br>"))
+    #set( $string = $string.replaceAll("<\/ol>|<\/ul>",""))
+    #set( $string = $string.replaceAll("<li.*?>","&#x2022; "))
+    #set( $string = $string.replaceAll("<\/li>","<br>"))
+
+    ## Misc edge cases
+    #set( $string = $string.replaceAll("\xA0",""))
+
+    $string
+  #end
+#end
+#########################################################################################################################
+#########################################################################################################################
+##
+
+#########################################################################################################################
+##          Macro: formatPlainText
+##          Desc: Remove all possibly present html tags from text box field content
+#########################################################################################################################
+#macro( formatPlainText $inString)
+  #if( $inString )
+    #set( $string = $inString.toString() )
+    #set( $string = $string.replaceAll("<(.|\n)*?>", ""))
+
+    $string
+  #end
+#end
+
+#########################################################################################################################
+#macro( stripPlainText $text )
+  #set($text = $text.replaceAll("<"," &lt;"))
+  #set($text = $text.replaceAll(">"," &gt;"))
+  $text
+#end
+#########################################################################################################################
+##
+
+#########################################################################################################################
+##          lookupPickListColor
+##          Input: item, the unique custom field name, the fetched picklist item
+##          Output: String type hex code color 
+##          Note: see example at base of template
+##          Call Example: #lookupPickListColor($doc "<unique field name>" $<item variable with item data> )
+##          Apply to cell: style="background:#$color;mso-pattern:#$color none;""
+#########################################################################################################################
+#macro( lookupPickListColor $doc $uniqueFieldName $fetchedFieldValue )
+              
+  #set( $docTypeField = $docTypeFieldDao.getDocumentTypeFieldByName( $uniqueFieldName, $doc.documentType.id ))
+  #set( $lookupTypeId = $docTypeField.getLookupTypeId())
+  #set( $fieldId = $docTypeField.documentField.id)
+  #set( $lookupTypeList = [])
+  #if( $lookupTypeList.add( $lookupTypeId ))#end
+  #set( $getLookupIdsReturn = $lookupDao.getLookupIdsByLookupTypes($lookupTypeList))
+  #set( $lookupValues = [])
+  
+  #foreach( $l in $getLookupIdsReturn)
+  #set( $lookup = $lookupDao.getLookup($mathTool.toInteger($l)))
+    #if( $lookupValues.add( $lookup)) #end
+  #end
+  #set( $color = "FFFFFF")
+  #foreach( $l in $lookupValues)
+    #if( $l.name == $fetchedFieldValue )
+      #set( $color = $l.color)
+      #break
+    #end
+  #end
+
+#end 
+##
+#########################################################################################################################
+##          Macro: getHierarchyLevel
+##          Input: $doc - document object
+##                 $baselineMode - true: export was from a baseline, false: export was from the project
+##                 $baselineId   - ID of the baseline that the items are part of, if in baseline mode
+##          Output: $hierarchyLevel - number, which heading level this item is in Jama relative to the container
+#########################################################################################################################
+#macro( getHierarchyLevel $doc $baselineMode $baselineId )
+  #set( $seqSubStrings = [] )
+  #set( $hierarchyLevel = 1)
+  ## Get hierarchy from the baseline
+  #if( $baselineMode )
+    #set( $docNode = $documentNodeDao.getDocumentNodeForBaseLine(5, $doc.id, $baselineId))
+  ## Get hierarchy from the project
+  #else
+    #set( $docNode = $documentNodeDao.getDocumentNode(5, $doc.id))
+  #end
+  ##Debug: $docNode
+  #set( $seqSubStrings = $docNode.sequence.split("\."))
+  ##Debug: $seqSubStrings
+  #set( $hierarchyLevel = $seqSubStrings.size())
+  #if( !$hierarchyLevelTop )
+    #set($hierarchyLevelTop = $hierarchyLevel)
+  #end
+
+  #set($hierarchyLevel = $hierarchyLevel - $hierarchyLevelTop + 1)
+#end
+
+
+#########################################################################################################################
+##           Macro: getStatus
+##           Input: $doc - document object
+##           Output: $docStatus - status of the item
+#########################################################################################################################
+#macro( getStatus $doc )
+  #set( $docStatus = false )
+  #foreach( $docTypeField in $doc.documentType.documentTypeFields )
+    #if( $docTypeField.documentField.name == "status" )
+      #set ( $docStatus = $doc.status.name )
+      #break
+    #end
+  #end
+#end
+##
+
+#########################################################################################################################
+##
+
+#########################################################################################################################
+##          Macro: getDate
+##          Input: Java Time Zone ID to determine which timezone to display the date in
+##          Output: Formatted date in the desired timezone
+#########################################################################################################################
+#macro( getDate $inputDate $inputTimeZone )
+  #set( $outTz = $dateTool.getTimeZone().getTimeZone($inputTimeZone) )
+  #set( $locale = $dateTool.getLocale() )
+  $dateTool.format( "MM/dd/yyyy", $inputDate, $locale, $outTz )
+#end
+
+#########################################################################################################################
+##
+#########################################################################################################################
+##          Macro: getBaselineRelationships
+##          Input: $currentVersionId - ID of the currentVersion of an item 
+##                 $baselineId - ID of a baseline   
+##                 $inDoc - current item
+##                 $inDownstream - true provides downstream relationships, false provides upstream relationships    
+##          Creates: $returnBaselineRels list of upstream Or downstream baseline relationships 
+#########################################################################################################################
+#macro( getBaselineRelationships $currentVersionId $baselineId $inDoc $inDownstream )
+  #set( $start = 0 )
+  #set( $count = 20 )
+  #set( $versionedRelationships = [] )
+  #set( $returnBaselineRels = [])
+  #set( $pageSize = 20)
+  #set( $relatedIds = [] )
+  ##
+  #set($baseRelsPage = $documentSource.getRelationships($currentVersionId,$baselineId,$start,$count))
+  ##
+  #set( $totalRels = [])
+  #set( $totalRels = $baseRelsPage.getPageInfo().getTotalResults())
+  ## DEBUG Baseline Page Info: $baseRelsPage.getPageInfo() <br><br>
+  ## DEBUG Baseline Relationship Count: $baseRelsPage.getPageInfo().getTotalResults()<br><br>
+  ## DEBUG Baseline Results: $baseRelsPage.getResults() 
+  #if( $totalRels && $totalRels > 0)
+    #set( $page_count = $mathTool.floor($mathTool.div($totalRels,$pageSize)) )
+    #foreach( $page in [0..$page_count])
+      #set( $baseRelsPage = $documentSource.getRelationships($currentVersionId,$baselineId,$start,$count))
+      #set( $baseRelsPageResults = $baseRelsPage.getResults())
+      #if( $baseRelsPageResults )
+       #set( $success = $versionedRelationships.addAll($baseRelsPageResults ))
+      #end 
+      #set( $start = $start + $count)
+    #end
+  #end
+  ##
+  #foreach( $versionedRelationship in $versionedRelationships )
+    #if( $inDownstream ) ## Get Downstream Relationships
+      #set( $upItemId = $versionedRelationship.getFromItem().getValue().get(0) )
+      #set( $upItemVersion = $versionedRelationship.getFromItem().getValue().get(1) )
+      
+      ## Get CountourItem by Id and Version ## 
+      #set( $upDocVersion = $documentSource.getVersionByDocAndVersionNumber($upItemId,$upItemVersion))
+      #set( $upDoc = $upDocVersion.document)
+
+      #if( $inDoc.id == $upDoc.id ) 
+        #set( $dnItemId = $versionedRelationship.getToItem().getValue().get(0) )
+        #set( $dnItemVersion = $versionedRelationship.getToItem().getValue().get(1) )
+    
+        ## Get CountourItem by Id and Version ##  
+        #set( $dnVersion = $documentSource.getVersionByDocAndVersionNumber($dnItemId,$dnItemVersion))
+        #set( $dnDoc = $dnVersion.document ) 
+
+        #if( !$relatedIds.contains($dnDoc.id) )
+          #set( $success = $relatedIds.add($dnDoc.id) )
+          #set( $success = $returnBaselineRels.add( {"fromDocument":$inDoc,"toDocument":$dnDoc} ) )
+        #end
+      #end 
+    #else
+      #set( $dnItemId = $versionedRelationship.getToItem().getValue().get(0) )
+      #set( $dnItemVersion = $versionedRelationship.getToItem().getValue().get(1) )
+      
+      ## Get CountourItem by Id and Version ## 
+      #set( $dnDocVersion = $documentSource.getVersionByDocAndVersionNumber($dnItemId,$dnItemVersion))
+      #set( $dnDoc = $dnDocVersion.document)
+    
+
+      #if( $inDoc.id == $dnDoc.id ) ## Get Upstream Relationships
+        #set( $upItemId = $versionedRelationship.getFromItem().getValue().get(0) )
+        #set( $upItemVersion = $versionedRelationship.getFromItem().getValue().get(1) )
+  
+        ## Get CountourItem by Id and Version ##  
+        #set( $upVersion = $documentSource.getVersionByDocAndVersionNumber($upItemId,$upItemVersion))
+        #set( $upDoc = $upVersion.document )
+ 
+
+        #if( !$relatedIds.contains( $upDoc.id) )
+          #set( $success = $relatedIds.add( $upDoc.id) )
+          #set( $success = $returnBaselineRels.add( {"fromDocument":$upDoc,"toDocument":$inDoc} ) )
+        #end
+      #end
+
+    #end 
+  #end
+#end
+#########################################################################################################################
+##          Macro: getRelationships
+##          Inputs: $baselineMode - GLOBAL, tells the report if the export was from a baseline or not 
+##                  $baselineId - GLOBAL, ID of a baseline       
+##                  $inDoc - current item
+##                  $inDownstream - true provides downstream relationships, false provides upstream relationships
+##          Creates: $returnRels - list of relationships with sub-elements of "fromItem" and "toItem" each of type 
+##                   item
+#########################################################################################################################
+#macro( getRelationships $inDoc $inDownstream )
+  #set( $returnRels = [] )
+
+  #if( $baselineMode && $baselineId )
+      #set( $inDocId = $inDoc.id )
+      #* If the item is active then we have the most recent version of the item. 
+      * The $inDoc.id is equivalent to the $inDoc.currentVersion.originDocument.id. 
+      * Thus we utilize the $inDoc.id as it is the more efficient retrieval of that id. 
+      * This "current version" id will be utilized as the first argument in the method
+      * getRelationships($currentVersionId,$baselineId,$start,$count)) in the #getBaselineRelationships macro. 
+            *
+      * If the item is not active, then we have a prior version of the item or the item has been deleted, 
+      * but we still want it to show up in the baselined trace - we want to show every related 
+      * item that existed when the baseline snapshot was made. In this case, to get the current version id of the 
+      * non-active item we utilize $inDoc.currentVersion.originDocument.id.
+      *#
+      #if( !$inDoc.active )
+        #set( $currentVersion = $inDoc.currentVersion ) 
+        #set( $inDocId = $currentVersion.originDocument.id ) 
+      #end 
+      #getBaselineRelationships( $inDocId, $baselineId, $inDoc, $inDownstream ) ## Creates $returnBaselineRels 
+      #set( $returnRels = $returnBaselineRels )
+  #else
+
+    #set( $rels = [] )
+    #set ( $rels = $documentSource.getRelationshipsForDocument($inDoc.id, $inDownstream) )
+    #foreach( $rel in $rels )
+      #if( $inDownstream )  ## Get Downstream Relationships
+        #if ( $rel.toDocument.active )
+          #set( $success = $returnRels.add( $rel ) )
+        #end
+      #else                 ## Get Upstream Relationships
+        #if ( $rel.fromDocument.active )
+          #set( $success = $returnRels.add( $rel ) )
+        #end
+      #end
+    #end
+  #end
+#end
+##
+
+#macro( getRiskLevel $occurrence $severity $outputVar )
+  #set($riskMatrix = {
+    "5 - Frequent" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"INT", "5 - Catastrophic":"INT" },
+    "4 - Likely" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+    "3 - Occasional" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+    "2 - Remote" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"MOD" },
+    "1 - Incredible" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"LOW" }
+  })
+
+  #set($riskRow = $riskMatrix.get($occurrence.toString()))
+  #if($riskRow)
+    #set($void = $outputVar.set($riskRow.get($severity.toString())))
+  #else
+    #set($void = $outputVar.set("UNKNOWN"))
+  #end
+#end
+
+
+######################################################################################################################
+######################################################################################################################
+
+#########################################################################################################################
+##
+##  BODY
+##
+#########################################################################################################################
+
+
+------=_NextPart_01D8DFBE.2078AF30
+Content-Location: file:///C:/61233B10/Single_Sheet_Mockup_files/sheet001.htm
+Content-Type: text/html; charset="utf-8"
+
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 15">
+<link id=Main-File rel=Main-File href="../Single_Sheet_Mockup.htm">
+<link rel=File-List href=filelist.xml>
+<<style>
+<!--table
+  {mso-displayed-decimal-separator:"\.";
+  mso-displayed-thousand-separator:"\,";}
+@page
+  {margin:.75in .7in .75in .7in;
+  mso-header-margin:.3in;
+  mso-footer-margin:.3in;}
+-->
+</style>
+</head>
+
+  
+<body link="#0563C1" vlink="#954F72" class=xl65>
+
+ 
+    #set ($riskMatrix = {
+      "5 - Frequent" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"INT", "5 - Catastrophic":"INT" },
+      "4 - Likely" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+      "3 - Occasional" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+      "2 - Remote" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"MOD" },
+      "1 - Incredible" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"LOW" }
+    })
+
+
+    ## Dynamic Content Rows (Exported Items)
+    #if ($postRisk)
+
+    ## Header Row
+        <table border= 0 cellpadding= 0 cellspacing= 0 width= 2651 style= 'border-collapse:collapse;table-layout:fixed;width:1991pt'>
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+          <col width=120 span=2 style='mso-width-source:userset;mso-width-alt:4388;width:90pt'>
+          <col width=311 style='mso-width-source:userset;mso-width-alt:11373;width:233pt'>
+          <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:95pt'>
+          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
+          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:157pt'>
+          <col width=293 style='mso-width-source:userset;mso-width-alt:10715;width:220pt'>
+          <col width=200 style='mso-width-source:userset;mso-width-alt:3803;width:150pt'>
+          <col width=366 style='mso-width-source:userset;mso-width-alt:13385;width:275pt'>
+          <col width=121 style='mso-width-source:userset;mso-width-alt:4425;width:91pt'>
+          <col width=103 style='mso-width-source:userset;mso-width-alt:3766;width:77pt'>
+          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
+          <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
+          <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
+          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
+          <col width=64 span=3 style='width:48pt'>
+
+          <tr>
+            <td rowspan="3" height="115" width="178" style="height:86.45pt;width:134pt;" align="left" valign="top">
+            <!--[if gte vml 1]>
+            <v:shape style=3D'position:absolute;margin-left:15.75pt;margin-top:12pt;width:104.25pt;height:60.75pt;z-index:1;visibility:visible'>
+                <v:imagedata src=3D"image001.png" o:title="cid:"/>
+              </v:shape><![endif]-->
+            </td>
+            <td colspan=8 class=xl116>Document Name:</td>
+            <td class=xl67>Doc ID & Rev</td>
+          </tr>
+          <tr>
+            <td colspan=8 class=xl119>---</td>
+            <td class=xl73>&#35;&#35;&#35;&#35;&#35;-FME-&#35;&#35;&#91;&#35;&#35;&#93;</td>
+          </tr>
+          <tr>
+            <td colspan= 8 class=xl122>Business Confidential</td>
+            <td class= xl68></td>
+          </tr>
+          <tr></tr>
+          <tr><td height=37 class=xl84 style='height:27.75pt;'>Overview</td></tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+           <td height=31 class=xl88 colspan=2 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Product Name &amp; Part Number(s): -----</td>
+           <td></td>
+          </tr>
+          <tr></tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+            <td height=31 class=xl88 colspan=4 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>
+            Document(s) Defining the Construction &amp; Operation of unit for this Analysis
+            <span style='mso-spacerun:yes'></span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+          <td height=31 class=xl94 colspan=3 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>The Risk Analysis was done per SPR-WI-&#35;&#35;&#35;&#35;&#35;</td>
+          <td></td>
+          </tr>
+          <tr></tr>
+          <tr><td height=38 class=xl84 style='height:28.5pt'>Notes</td></tr>
+          <tr><td height=38 class=xl98 style='height:28.5pt'>1.<span style='mso-spacerun:yes;'></span>----</td></tr>
+          <tr></tr>
+          <tr class=xl72 height=48 style='height:36.0pt;'>
+            <td height=48 class=xl107 colspan=5 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Design Failure Modes &amp; Effects Analysis (dFMEA)</td>
+            <td></td>
+          </tr>
+          <tr height=61 style='height:45.75pt'>
+            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
+            <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
+            <td class=xl66 width=120 style='width:90pt;'>Part/Component Applicable</td>
+            <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
+            <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
+            <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
+            <td class=xl66 width=209 style='width:157pt;'>Scoring Source/Comments</td>
+            <td class=xl66 width=90 style='width:68pt;'>Hazardous Situation ID</td>
+            <td class=xl66 width=293 style='width:220pt;'>Hazardous Situation</td>
+            <td class=xl66 width=104 style='width:78pt;'>Harm ID</td>
+            <td class=xl66 width=366 style='width:275pt;'>Harm</td>
+            <td class=xl66 width=121 style='width:91pt;'>Severity Of Harm</td>
+            <td class=xl66 width=103 style='width:77pt;'>Initial Risk Evaluation</td>
+            <td class=xl66 width=201 style='width:151pt;'>Risk Control</td>
+            <td class=xl66 width=201 style='width:151pt;'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
+            <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Post Risk Control)</td>
+            <td class=xl66 width=103 style='width:77pt;'>Final Risk Evaluation</td>
+            <td colspan=3 style='mso-ignore:colspan;'></td>
+          </tr>
+
+
+           #foreach ($vDoc in $documentList)
+            #set ( $doc = $vDoc.document )
+            #set ( $docTypeid = $doc.documentType.id )
+            #set ($globalHarmIndex = 0)        
+                #getRelationships ($doc, true)
+                #set ($dnRels = $returnRels)
+                
+              #if ($docTypeid == 180)
+                #set ($totalHarms = 0)
+                #set ($hazardHarmCounts = {})
+                #foreach ($dnRel in $dnRels)
+                  #set ($hazardousDoc = $dnRel.toDocument)
+                  #set ($hazardousDocId = $hazardousDoc.documentType.id)
+                #if ($hazardousDocId == 177)
+                  #getRelationships ($hazardousDoc, true)
+                  #set ($harmRels = $returnRels)
+                  #set ($harmCount = 0)
+                  #if ($harmRels && $harmRels.size() > 0)
+                    #set ($harmCount = $harmRels.size())
+                  #else
+                    #set ($harmCount = 1)
+                  #end
+                  #set ($totalHarms = $totalHarms + $harmCount)
+                  #set ($void = $hazardHarmCounts.put($hazardousDoc.documentKey, $harmCount))
+                #end
+                #end
+
+                  #set ($dFMEAprinted = false)
+                  #set ($rationalePrinted = false)
+                  #foreach ($dnRel in $dnRels)
+                    #set ($hazardousDoc = $dnRel.toDocument)
+                    #getRelationships ($hazardousDoc, true)
+                    #set ($harmRels = $returnRels)
+                    #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
+                    #set ($hazardPrinted = false)
+
+                    #if ($harmRels && $harmRels.size() > 0)
+
+                    #set ($harmIndex = 0)
+
+                      #foreach ($harmRel in $harmRels)
+                      #set ($harmIndex = $harmIndex + 1)
+                      
+                   
+                          #set ($harmDoc = $harmRel.toDocument)
+                          #set ($harmDocId = $harmDoc.documentType.id)
+                          #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
+                          #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
+                          #set ($postOccurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_post_risk_control", $dateFormat))
+                          #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
+                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
+                          #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
+                          #set ($partcomponent_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
+                          #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat)) 
+                          #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat)) 
+                              #set ($riskRow = $riskMatrix.get($occurrence))
+                              #if ($riskRow)
+                                #set ($result = $riskRow.get($severity))
+                                  #set ($riskEvalStyle = "")
+                                    #if ($result == "LOW")
+                                      #set ($riskEvalStyle = "background-color:#92D050;") ## green
+                                    #elseif ($result == "MOD")
+                                      #set ($riskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                    #elseif ($result == "INT")
+                                      #set ($riskEvalStyle = "background-color:#FF0000;") ## red
+                                    #end
+                              #end
+                              #set ($postRiskRow = $riskMatrix.get($postOccurrence))
+                              #if ($postRiskRow)
+                                #set ($postResult = $postRiskRow.get($severity))
+                                  #set ($postRiskEvalStyle = "")
+                                    #if ($postResult == "LOW")
+                                      #set ($postRiskEvalStyle = "background-color:#92D050;") ## green
+                                    #elseif ($postResult == "MOD")
+                                      #set ($postRiskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                    #elseif ($postResult == "INT")
+                                      #set ($postRiskEvalStyle = "background-color:#FF0000;") ## red
+                                    #end
+                              #end
+                      #if ($harmDocId == 158 && $hazardousDocId == 177)
+                      #set ($globalHarmIndex = $globalHarmIndex + 1)
+                        #set ($borderStyle = "")
+                          #if ($harmIndex == $hazardHarmCount)
+                            #set ($borderStyle = "border-bottom:1pt solid black;")
+                          #end
+                          #set ($borderStyleHarm = "")
+                          #if ($globalHarmIndex == $totalHarms)
+                            #set ($borderStyleHarm = "border-bottom:1pt solid black;")
+                          #end
+                        <tr>
+                          #if (!$dFMEAprinted)
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partcomponent_applicable</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
+                            #set ($dFMEAprinted = true)
+                          #end
+
+                        #if (!$hazardPrinted)
+                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.documentKey</td>
+                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.name</td>
+                          #set ($hazardPrinted = true)
+                        #end
+
+                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.documentKey</td>
+                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.name</td>
+                          <td class="xl113" style = "$borderStyleHarm">$!severity</td>
+                          <td class="xl113" style="$riskEvalStyle $borderStyleHarm">$!result</td>
+                          
+
+                          #if (!$rationalePrinted && $docTypeid == 180)
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!risk_control</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!analysisOfRisk</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!postOccurrence</td>
+                            #set ($rationalePrinted = true)
+                          #end
+
+                          <td class="xl113" style="$postRiskEvalStyle $borderStyleHarm">$!postResult</td>
+                          
+                        </tr>
+                      #end
+                      #end
+                    #end
+                  #end
+              #end    
+        #end 
+#else
+    ## Header Row
+        <table border= 0 cellpadding= 0 cellspacing= 0 width= 2651 style= 'border-collapse:collapse;table-layout:fixed;width:1991pt'>
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+          <col width=120 span=2 style='mso-width-source:userset;mso-width-alt:4388;width:90pt'>
+          <col width=311 style='mso-width-source:userset;mso-width-alt:11373;width:233pt'>
+          <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:95pt'>
+          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
+          <col width=209 style='mso-width-source:userset;mso-width-alt:7643;width:157pt'>
+          <col width=293 style='mso-width-source:userset;mso-width-alt:10715;width:220pt'>
+          <col width=200 style='mso-width-source:userset;mso-width-alt:3803;width:150pt'>
+          <col width=366 style='mso-width-source:userset;mso-width-alt:13385;width:275pt'>
+          <col width=121 style='mso-width-source:userset;mso-width-alt:4425;width:91pt'>
+          <col width=103 style='mso-width-source:userset;mso-width-alt:3766;width:77pt'>
+          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
+          <col width=64 span=3 style='width:48pt'>
+
+          ## Header Row
+          <tr>
+            <td rowspan="3" height="115" width="178" style="height:86.45pt;width:134pt;" align="left" valign="top">
+            <!--[if gte vml 1]>
+            <v:shape style=3D'position:absolute;margin-left:15.75pt;margin-top:12pt;width:104.25pt;height:60.75pt;z-index:1;visibility:visible'>
+                <v:imagedata src=3D"image001.png" o:title="cid:"/>
+              </v:shape><![endif]-->
+            </td>
+            <td colspan=8 class=xl116>Document Name:</td>
+            <td class=xl67>Doc ID & Rev</td>
+          </tr>
+          <tr>
+            <td colspan=8 class=xl119>---</td>
+            <td class=xl73>&#35;&#35;&#35;&#35;&#35;-FME-&#35;&#35;&#91;&#35;&#35;&#93;</td>
+          </tr>
+          <tr>
+            <td colspan= 8 class=xl122>Business Confidential</td>
+            <td class= xl68></td>
+          </tr>
+          <tr></tr>
+          <tr><td height=37 class=xl84 style='height:27.75pt;'>Overview</td></tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+           <td height=31 class=xl88 colspan=2 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Product Name &amp; Part Number(s): -----</td>
+           <td></td>
+          </tr>
+          <tr></tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+            <td height=31 class=xl88 colspan=4 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>
+            Document(s) Defining the Construction &amp; Operation of unit for this Analysis
+            <span style='mso-spacerun:yes'></span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
+          <td height=31 class=xl94 colspan=3 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>The Risk Analysis was done per SPR-WI-&#35;&#35;&#35;&#35;&#35;</td>
+          <td></td>
+          </tr>
+          <tr></tr>
+          <tr><td height=38 class=xl84 style='height:28.5pt'>Notes</td></tr>
+          <tr><td height=38 class=xl98 style='height:28.5pt'>1.<span style='mso-spacerun:yes;'></span>----</td></tr>
+          <tr></tr>
+          <tr class=xl72 height=48 style='height:36.0pt;'>
+            <td height=48 class=xl107 colspan=5 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Design Failure Modes &amp; Effects Analysis (dFMEA)</td>
+            <td></td>
+          </tr>
+          <tr height=61 style='height:45.75pt'>
+            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
+            <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
+            <td class=xl66 width=120 style='width:90pt;'>Part/Component Applicable</td>
+            <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
+            <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
+            <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
+            <td class=xl66 width=209 style='width:157pt;'>Scoring Source/Comments</td>
+            <td class=xl66 width=90 style='width:68pt;'>Hazardous Situation ID</td>
+            <td class=xl66 width=293 style='width:220pt;'>Hazardous Situation</td>
+            <td class=xl66 width=104 style='width:78pt;'>Harm ID</td>
+            <td class=xl66 width=366 style='width:275pt;'>Harm</td>
+            <td class=xl66 width=121 style='width:91pt;'>Severity Of Harm</td>
+            <td class=xl66 width=103 style='width:77pt;'>Initial Risk Evaluation</td>
+            <td class=xl66 width=201 style='width:151pt;'>Risk Control</td>
+            <td colspan=3 style='mso-ignore:colspan;'></td>
+          </tr>
+
+
+           #foreach ($vDoc in $documentList)
+            #set ( $doc = $vDoc.document )
+            #set ( $docTypeid = $doc.documentType.id )  
+            #set ( $globalHarmIndex = 0 )      
+                #getRelationships ($doc, true)
+                #set ($dnRels = $returnRels)
+                
+              #if ($docTypeid == 180)
+                #set ($totalHarms = 0)
+                #set ($hazardHarmCounts = {})
+                #foreach ($dnRel in $dnRels)
+                  #set ($hazardousDoc = $dnRel.toDocument)
+                  #set ($hazardousDocId = $hazardousDoc.documentType.id)
+                #if ($hazardousDocId == 177)
+                  #getRelationships ($hazardousDoc, true)
+                  #set ($harmRels = $returnRels)
+                  #set ($harmCount = 0)
+                  #if ($harmRels && $harmRels.size() > 0)
+                    #set ($harmCount = $harmRels.size())
+                  #else
+                    #set ($harmCount = 1)
+                  #end
+                  #set ($totalHarms = $totalHarms + $harmCount)
+                  #set ($void = $hazardHarmCounts.put($hazardousDoc.documentKey, $harmCount))
+                #end
+                #end
+
+                  #set ($dFMEAprinted = false)
+                  #set ($rationalePrinted = false)
+                  #foreach ($dnRel in $dnRels)
+                    #set ($hazardousDoc = $dnRel.toDocument)
+                    #getRelationships ($hazardousDoc, true)
+                    #set ($harmRels = $returnRels)
+                    #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
+                    #set ($hazardPrinted = false)
+
+                    #if ($harmRels && $harmRels.size() > 0)
+
+                    #set ($harmIndex = 0)
+
+                      #foreach ($harmRel in $harmRels)
+                      #set ($harmIndex = $harmIndex + 1)
+                      
+                          #set ($harmDoc = $harmRel.toDocument)
+                          #set ($harmDocId = $harmDoc.documentType.id)
+                          #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
+                          #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
+                          #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
+                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
+                          #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
+                          #set ($partcomponent_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
+                          #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat)) 
+                              #set ($riskRow = $riskMatrix.get($occurrence))
+                              #if ($riskRow)
+                                #set ($result = $riskRow.get($severity))
+                                  #set ($riskEvalStyle = "")
+                                    #if ($result == "LOW")
+                                      #set ($riskEvalStyle = "background-color:#92D050;") ## green
+                                    #elseif ($result == "MOD")
+                                      #set ($riskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                    #elseif ($result == "INT")
+                                      #set ($riskEvalStyle = "background-color:#FF0000;") ## red
+                                    #end
+                              #end
+                      #if ($harmDocId == 158 && $hazardousDocId == 177)
+                       #set ($globalHarmIndex = $globalHarmIndex + 1)
+                        #set ($borderStyle = "")
+                          #if ($harmIndex == $hazardHarmCount)
+                            #set ($borderStyle = "border-bottom:1pt solid black;")
+                          #end
+                          #set ($borderStyleHarm = "")
+                          #if ($globalHarmIndex == $totalHarms)
+                            #set ($borderStyleHarm = "border-bottom:1pt solid black;")
+                          #end
+                        <tr>
+                          #if (!$dFMEAprinted)
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partcomponent_applicable</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
+                            #set ($dFMEAprinted = true)
+                          #end
+
+                        #if (!$hazardPrinted)
+                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.documentKey</td>
+                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.name</td>
+                          #set ($hazardPrinted = true)
+                        #end
+
+                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.documentKey</td>
+                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.name</td>
+                          <td class="xl113" style = "$borderStyleHarm">$!severity</td>
+                          <td class="xl113" style="$riskEvalStyle $borderStyleHarm">$!result</td>
+
+                          #if (!$rationalePrinted && $docTypeid == 180)
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!risk_control</td>
+                            #set ($rationalePrinted = true)
+                          #end
+                        </tr>
+                      #end
+                      #end
+                    #end
+                  #end
+              #end    
+        #end 
+#end
+      </table>
+    </body>
+</html>
+
+## Leave boundaries and file list as is ## 
+
+------=_NextPart_01D8DFBE.2078AF30
+Content-ID: image001.png
+Content-Transfer-Encoding: base64
+Content-Type:  image/png
+
+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
+rkJggk==
+
+------=_NextPart_01D8DFBE.2078AF30
+Content-Location: file:///C:/61233B10/Single_Sheet_Mockup_files/filelist.xml
+Content-Type: text/xml; charset="utf-8"
+
+<xml xmlns:o="urn:schemas-microsoft-com:office:office">
+ <o:MainFile HRef="../Single_Sheet_Mockup.htm"/>
+ <o:File HRef="stylesheet.css"/>
+ <o:File HRef="sheet001.htm"/>
+ <o:File HRef="filelist.xml"/>
+ <o:File HRef="filelist.xml"/>
+ <o:File HRef="image001.png"/>
+</xml>
+------=_NextPart_01D8DFBE.2078AF30--
