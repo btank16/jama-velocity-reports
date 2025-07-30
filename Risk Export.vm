@@ -1001,6 +1001,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
           #if ($legacyId)
             <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
           #end
+          #if ($riskCondition)
+            <col width=103 style='mso-width-source:userset;mso-width-alt:11373;width:40pt'>
+          #end
           <col width=64 span=3 style='width:48pt'>
 
           <tr>
@@ -1104,6 +1107,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
             #if ($legacyId)
              <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
             #end
+            #if ($riskCondition)
+             <td class=xl66 width=100 style='width:40pt;'>Risk Control Condition</td>
+            #end
             <td colspan=3 style='mso-ignore:colspan;'></td>
           </tr>
 
@@ -1138,6 +1144,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                   #set ($dFMEAprinted = false)
                   #set ($rationalePrinted = false)
                   #set ($legacyPrinted = false)
+                  #set ($riskPrinted = false)
                   #foreach ($dnRel in $dnRels)
                     #set ($hazardousDoc = $dnRel.toDocument)
                     #getRelationships ($hazardousDoc, true)
@@ -1258,7 +1265,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($borderStyleHarm = "")
                           #if ($globalHarmIndex == $totalHarms)
                             #set ($borderStyleHarm = "border-bottom:1pt solid black;")
-                          #end
+                          #end 
                         <tr>
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
@@ -1314,6 +1321,19 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                 #set ($legacyPrinted = true)
                             #end
                           #end
+                          #if ($riskCondition)
+                            #if (!$riskPrinted)
+                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black; text-align: center;">
+                                    #foreach ($dnRel in $dnRels)
+                                        #set ($linkedDoc = $dnRel.toDocument)
+                                        #if ($linkedDoc.documentType.id != 177)
+                                            <div>$!linkedDoc.documentKey</div>
+                                        #end
+                                    #end
+                                </td>
+                                #set ($riskPrinted = true)
+                            #end
+                          #end
                           
                         </tr>
                       #end
@@ -1348,6 +1368,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
           #if ($legacyId)
             <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+          #end
+          #if ($riskCondition)
+            <col width=103 style='mso-width-source:userset;mso-width-alt:11373;width:40pt'>
           #end
           <col width=64 span=3 style='width:48pt'>
 
@@ -1431,6 +1454,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
             <td class=xl66 width=201 style='width:151pt;'>Risk Control</td>
             #if ($legacyId)
              <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
+            #end
+            #if ($riskCondition)
+             <td class=xl66 width=100 style='width:40pt;'>Risk Control Condition</td>
             #end
             <td colspan=3 style='mso-ignore:colspan;'></td>
           </tr>
@@ -1533,7 +1559,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                     #end
                               #end
                             #end
-                      #if ($harmDocId == 158 && $hazardousDocId == 177)
+                       #if ($harmDocId == 158 && $hazardousDocId == 177)
                        #set ($globalHarmIndex = $globalHarmIndex + 1)
                         #set ($borderStyle = "")
                           #if ($harmIndex == $hazardHarmCount)
@@ -1542,7 +1568,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($borderStyleHarm = "")
                           #if ($globalHarmIndex == $totalHarms)
                             #set ($borderStyleHarm = "border-bottom:1pt solid black;")
-                          #end
+                          #end 
+            
+                    
                         <tr>
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
@@ -1574,10 +1602,20 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           <td class="xl113" style = "$borderStyleHarm">$!severity</td>
                           <td class="xl113" style="$riskEvalStyle $borderStyleHarm">$!result</td>
 
-                          #if (!$rationalePrinted && $docTypeid == 180)
+                          #if (!$rationalePrinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!risk_control</td>
                             #if ($legacyId)
                                 <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!legacy_id</td>
+                            #end
+                            #if ($riskCondition)
+                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black; text-align: center;">
+                                    #foreach ($dnRel in $dnRels)
+                                        #set ($linkedDoc = $dnRel.toDocument)
+                                        #if ($linkedDoc.documentType.id != 177)
+                                            <div>$!linkedDoc.documentKey</div>
+                                        #end
+                                    #end
+                                </td>
                             #end
                             #set ($rationalePrinted = true)
                           #end
