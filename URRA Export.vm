@@ -1019,7 +1019,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
                     #getRelationships ($useTaskDoc, true)
                     #set ($useErrorRels = $returnRels)
                   
-
                     #foreach ($useErrorRel in $useErrorRels)
                       #set ($useErrorDoc = $useErrorRel.toDocument)
                       #if ($useErrorDoc.documentType.id == 154)
@@ -1060,20 +1059,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
                       #end
                     #end
 
-                    #if ($useErrorData.size() == 0)
-                      <tr>
-                        <td>$!useTaskDoc.documentKey</td>
-                        <td>$!useTaskDoc.description</td>
-                        <td>$!velocityReportUtil.getValueForField($useTaskDoc, "critical_task", $dateFormat)</td>
-                        <td colspan="13" style="font-style:italic; color:#888;">No associated Use Errors found</td>
-                      </tr>
-                    #end
-
                     ## Print rows
                     #set ($rationalePrinted = false)
                     #set ($useTaskPrinted = false)
                     #foreach ($ue in $useErrorData)
-                      #set ($useErrorDoc = $ue.useError)
+                      #set ($ueDoc = $ue.useError)
                       #set ($useErrorHarmCount = 0)
                       #foreach ($hz in $ue.hazards)
                         #set ($useErrorHarmCount = $useErrorHarmCount + $hz.harms.size())
@@ -1081,48 +1071,49 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
                       #set ($useErrorPrinted = false)
                       #foreach ($hz in $ue.hazards)
-                        #set ($hazardDoc = $hz.hazard)
+                        #set ($hzdDoc = $hz.hazard)
                         #set ($harmList = $hz.harms)
                         #set ($hazardPrinted = false)
 
                         #foreach ($harmDoc in $harmList)
-                                    #set ($occurrence = $velocityReportUtil.getValueForField($useErrorDoc, "occurrence", $dateFormat))
-                                    #set ($postOccurrence = $velocityReportUtil.getValueForField($useErrorDoc, "occurrence_postmitigation", $dateFormat))
+                                    #set ($occurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_pre_risk_control", $dateFormat))
+                                    #set ($postOccurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_post_risk_control", $dateFormat))
                                     #set ($pre_2 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_2", $dateFormat))
                                     #set ($pre_3 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_3", $dateFormat))
                                     #set ($pre_4 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_4", $dateFormat))
                                     #set ($pre_5 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_5", $dateFormat))
-                                    #set ($sourcecomments = $velocityReportUtil.getValueForField($useErrorDoc, "rationale", $dateFormat))
-                                    #set ($risk_control = $velocityReportUtil.getValueForField($useTaskDoc, "risk_control_description", $dateFormat))
-                                    #set ($analysisOfRisk = $velocityReportUtil.getValueForField($useTaskDoc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat)) 
+                                    #set ($sourcecomments = $velocityReportUtil.getValueForField($ueDoc, "scoring_sourcecomments", $dateFormat))
+                                    #set ($risk_control = $velocityReportUtil.getValueForField($ueDoc, "risk_control_description", $dateFormat))
+                                    #set ($analysisOfRisk = $velocityReportUtil.getValueForField($ueDoc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat)) 
                                     #set ($critical_task = $velocityReportUtil.getValueForField($useTaskDoc, "critical_task", $dateFormat))
-                                    #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat)) 
+                                    #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
+                                     
                           <tr style="border:1pt solid black;">
 
                             #if (!$useTaskPrinted)
                               <td rowspan="$totalHarms">$!useTaskDoc.documentKey</td>
-                              <td rowspan="$totalHarms">$!useTaskDoc.description</td>
+                              <td rowspan="$totalHarms">#formatRichTextCell ($!useTaskDoc.description$!useTaskDoc.name)</td>
                               <td rowspan="$totalHarms">$!critical_task</td>
                               #set ($useTaskPrinted = true)
                             #end
 
                             #if (!$useErrorPrinted)
-                              <td rowspan="$useErrorHarmCount">$!useErrorDoc.documentKey</td>
-                              <td rowspan="$useErrorHarmCount">$!useErrorDoc.description</td>
-                              <td rowspan="$useErrorHarmCount">$!occurence</td>
+                              <td rowspan="$useErrorHarmCount">$!ueDoc.documentKey</td>
+                              <td rowspan="$useErrorHarmCount">#formatRichTextCell ($!ueDoc.name)</td>
+                              <td rowspan="$useErrorHarmCount">$!occurrence</td>
                               <td rowspan="$useErrorHarmCount">$!sourcecomments</td>
                               #set ($useErrorPrinted = true)
                             #end
 
                             #if (!$hazardPrinted)
-                              <td rowspan="$harmList.size()">$!hazardDoc.documentKey</td>
-                              <td rowspan="$harmList.size()">$!hazardDoc.description</td>
+                              <td rowspan="$harmList.size()">$!hzdDoc.documentKey</td>
+                              <td rowspan="$harmList.size()">#formatRichTextCell ($!hzdDoc.name)</td>
                               #set ($hazardPrinted = true)
                             #end
 
                             #if ($harmDoc != "placeholder")
                               <td>$!harmDoc.documentKey</td>
-                              <td>$!harmDoc.name</td>
+                              <td>#formatRichTextCell ($!harmDoc.name)</td>
                               <td>$!severity</td>
                             #else
                               <td colspan="3">(No Harm)</td>
@@ -1144,7 +1135,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                             #if (!$rationalePrinted)
                               <td rowspan="$totalHarms">$!risk_control</td>
                               <td rowspan="$totalHarms">$!analysisOfRisk</td>
-                              <td rowspan="$totalHarms">$!postOccurence</td>
+                              <td rowspan="$totalHarms">$!postOccurrence</td>
                               #set ($rationalePrinted = true)
                             #end
 
