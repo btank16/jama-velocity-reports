@@ -971,7 +971,15 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <col width=88 style='mso-width-source:userset;mso-width-alt:3218;width:66pt'>
           <col width=131 style='mso-width-source:userset;mso-width-alt:4790;width:98pt'>
           <col width=209 style='mso-width-source:userset;mso-width-alt:7643;width:157pt'>
-          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          #if ($expandOccurrence)
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+          #else
+            <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          #end
           <col width=295 style='mso-width-source:userset;mso-width-alt:10788;width:221pt'>
           <col width=138 style='mso-width-source:userset;mso-width-alt:5046;width:104pt'>
           <col width=127 style='mso-width-source:userset;mso-width-alt:4644;width:95pt'>
@@ -980,14 +988,53 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
           <col width=76 style='mso-width-source:userset;mso-width-alt:2779;width:57pt'>
           <col width=259 style='mso-width-source:userset;mso-width-alt:9472;width:194pt'>
+        #if ($postRisk)
           <col width=175 style='mso-width-source:userset;mso-width-alt:6400;width:131pt'>
-          <col width=124 style='mso-width-source:userset;mso-width-alt:4534;width:93pt'>
-          <col width=78 style='mso-width-source:userset;mso-width-alt:2852;width:59pt'>
+          #if ($expandOccurrence)
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+            <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:30pt'>
+          #else
+            <col width=124 style='mso-width-source:userset;mso-width-alt:4534;width:93pt'>
+          #end
+            <col width=78 style='mso-width-source:userset;mso-width-alt:2852;width:59pt'>
+        #end
+        #if ($legacyId)
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+        #end
+        #if ($riskCondition)
+          <col width=103 style='mso-width-source:userset;mso-width-alt:11373;width:40pt'>
+        #end
 
           ## Header Row
           <tr></tr>
           <tr></tr>
           <tr></tr>
+          #if ($expandOccurrence)
+            <tr height=50 style='height:35.75pt'>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class=xl66 colspan = 5 style = "text-align: center;">Occurrence Score (Pre Risk Control)</td>
+              #if ($postRisk)
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class=xl66 colspan = 5 style = "text-align: center;">Occurrence Score (Post Risk Control)</td>
+              #end
+            </tr>
+          #end
 
           <tr height=97 style='mso-height-source:userset;height:73.15pt;border-bottom:1pt solid black;'>
             <td height=97 class=xl66 width=131 style='height:73.15pt;width:98pt'>Use Task ID</td>
@@ -995,7 +1042,15 @@ xmlns="http://www.w3.org/TR/REC-html40">
             <td class=xl66 width=88 style='border-left:none;width:66pt'>Critical Task?</td>
             <td class=xl66 width=131 style='border-left:none;width:98pt'>Use Error ID</td>
             <td class=xl66 width=209 style='border-left:none;width:157pt'>Use Error Description</td>
-            <td class=xl66 width=117 style='border-left:none;width:88pt'>Occurrence Score (Pre Risk Control)</td>
+            #if ($expandOccurrence)
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>1</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>2</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>3</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>4</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>5</td>
+            #else
+                <td class=xl66 width=117 style='border-left:none;width:88pt'>Occurrence Score (Pre Risk Control)</td>
+            #end
             <td class=xl66 width=295 style='border-left:none;width:221pt'>Scoring Source/Comments</td>
             <td class=xl66 width=138 style='border-left:none;width:104pt'>Hazardous Situation ID</td>
             <td class=xl66 width=127 style='border-left:none;width:95pt'>Hazardous Situation Description</td>
@@ -1004,9 +1059,25 @@ xmlns="http://www.w3.org/TR/REC-html40">
             <td class=xl66 width=117 style='border-left:none;width:88pt'>Severity Of Harm</td>
             <td class=xl66 width=74 style='border-left:none;width:60pt'>Initial Risk Evaluation</td>
             <td class=xl66 width=259 style='border-left:none;width:194pt'>Risk Control Description</td>
-            <td class=xl66 width=175 style='border-left:none;width:131pt'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
-            <td class=xl66 width=124 style='border-left:none;width:93pt'>Occurrence Score (Post Risk Control)</td>
-            <td class=xl66 width=78 style='border-left:none;width:59pt'>Final Risk Evaluation</td>
+          #if ($postRisk)
+              <td class=xl66 width=175 style='border-left:none;width:131pt'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
+            #if ($expandOccurrence)
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>1</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>2</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>3</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>4</td>
+                <td class=xl66 width=117 style='width:30pt; text-align: center;'>5</td>
+            #else
+                <td class=xl66 width=124 style='border-left:none;width:93pt'>Occurrence Score (Post Risk Control)</td>
+            #end
+              <td class=xl66 width=78 style='border-left:none;width:59pt'>Final Risk Evaluation</td>
+            #end
+          #if ($legacyId)
+            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
+            #end
+          #if ($riskCondition)
+            <td class=xl66 width=200 style='width:40pt;'>Risk Control Condition</td>
+          #end  
           </tr>
 
                 #foreach ($vDoc in $documentList)
@@ -1062,6 +1133,8 @@ xmlns="http://www.w3.org/TR/REC-html40">
                     ## Print rows
                     #set ($rationalePrinted = false)
                     #set ($useTaskPrinted = false)
+                    #set ($legacyPrinted = false)
+                    #set ($riskPrinted = false)
                     #foreach ($ue in $useErrorData)
                       #set ($ueDoc = $ue.useError)
                       #set ($useErrorHarmCount = 0)
@@ -1078,29 +1151,57 @@ xmlns="http://www.w3.org/TR/REC-html40">
                         #foreach ($harmDoc in $harmList)
                                     #set ($occurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_pre_risk_control", $dateFormat))
                                     #set ($postOccurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_post_risk_control", $dateFormat))
+                                    #set ($pre_1 = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_pre_risk_control", $dateFormat))
                                     #set ($pre_2 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_2", $dateFormat))
                                     #set ($pre_3 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_3", $dateFormat))
                                     #set ($pre_4 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_4", $dateFormat))
                                     #set ($pre_5 = $velocityReportUtil.getValueForField($useTaskDoc, "pre_5", $dateFormat))
+                                    #set ($post_1 = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_post_risk_control", $dateFormat))
+                                    #set ($post_2 = $velocityReportUtil.getValueForField($useTaskDoc, "post_2", $dateFormat))
+                                    #set ($post_3 = $velocityReportUtil.getValueForField($useTaskDoc, "post_3", $dateFormat))
+                                    #set ($post_4 = $velocityReportUtil.getValueForField($useTaskDoc, "post_4", $dateFormat))
+                                    #set ($post_5 = $velocityReportUtil.getValueForField($useTaskDoc, "post_5", $dateFormat))
                                     #set ($sourcecomments = $velocityReportUtil.getValueForField($ueDoc, "scoring_sourcecomments", $dateFormat))
                                     #set ($risk_control = $velocityReportUtil.getValueForField($ueDoc, "risk_control_description", $dateFormat))
                                     #set ($analysisOfRisk = $velocityReportUtil.getValueForField($ueDoc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat)) 
-                                    #set ($critical_task = $velocityReportUtil.getValueForField($useTaskDoc, "critical_task", $dateFormat))
+                                    #set ($critical_task_useTask = $velocityReportUtil.getValueForField($useTaskDoc, "critical_task", $dateFormat))
+                                    #set ($critical_task_useError = $velocityReportUtil.getValueForField($ueDoc, "critical_task", $dateFormat))
                                     #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
+                                    #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id", $dateFormat))
                                      
                           <tr style="border:1pt solid black;">
 
                             #if (!$useTaskPrinted)
                               <td rowspan="$totalHarms">$!useTaskDoc.documentKey</td>
-                              <td rowspan="$totalHarms">#formatRichTextCell ($!useTaskDoc.description$!useTaskDoc.name)</td>
-                              <td rowspan="$totalHarms">$!critical_task</td>
+                              <td rowspan="$totalHarms">
+                              #if ($useTaskDescription)
+                                #formatRichTextCell ($!useTaskDoc.description) 
+                              #else
+                                #formatRichTextCell ($!useTaskDoc.name)
+                              #end
+                              </td>
+                              <td rowspan="$totalHarms">
+                              #if ($criticalUseTask)
+                                #formatRichTextCell ($!critical_task_useTask)
+                              #else
+                                #formatRichTextCell ($!critical_task_useError)
+                              #end
+                              </td>
                               #set ($useTaskPrinted = true)
                             #end
 
                             #if (!$useErrorPrinted)
                               <td rowspan="$useErrorHarmCount">$!ueDoc.documentKey</td>
                               <td rowspan="$useErrorHarmCount">#formatRichTextCell ($!ueDoc.name)</td>
-                              <td rowspan="$useErrorHarmCount">$!occurrence</td>
+                               #if ($expandOccurrence)
+                                <td rowspan="$useErrorHarmCount">$!pre_1</td>
+                                <td rowspan="$useErrorHarmCount">$!pre_2</td>
+                                <td rowspan="$useErrorHarmCount">$!pre_3</td>
+                                <td rowspan="$useErrorHarmCount">$!pre_4</td>
+                                <td rowspan="$useErrorHarmCount">$!pre_5</td>
+                              #else
+                                <td  rowspan="$useErrorHarmCount">$!occurrence</td>
+                              #end
                               <td rowspan="$useErrorHarmCount">$!sourcecomments</td>
                               #set ($useErrorPrinted = true)
                             #end
@@ -1115,31 +1216,93 @@ xmlns="http://www.w3.org/TR/REC-html40">
                               <td>$!harmDoc.documentKey</td>
                               <td>#formatRichTextCell ($!harmDoc.name)</td>
                               <td>$!severity</td>
-                            #else
-                              <td colspan="3">(No Harm)</td>
                             #end
 
-                            #set ($riskRow = $riskMatrix.get($occurrence))
-                            #set ($riskResult = $riskRow.get($severity))
-                            #set ($riskStyle = "")
-                            #if ($riskResult == "LOW")
-                              #set ($riskStyle = "background-color:#92D050;")
-                            #elseif ($riskResult == "MOD")
-                              #set ($riskStyle = "background-color:#FFFF00;")
-                            #elseif ($riskResult == "INT")
-                              #set ($riskStyle = "background-color:#FF0000;")
+                            #if ($expandOccurrence)
+                                #if ($severity == "1 - Negligible")
+                                    #set ($occurrenceExpanded = $pre_1)
+                                #elseif ($severity == "2 - Minor")
+                                    #set ($occurrenceExpanded = $pre_2)
+                                #elseif ($severity == "3 - Serious")
+                                    #set ($occurrenceExpanded = $pre_3)
+                                #elseif ($severity == "4 - Critical")
+                                    #set ($occurrenceExpanded = $pre_4)
+                                #elseif ($severity == "5 - Catastrophic")
+                                    #set ($occurrenceExpanded = $pre_5) 
+                                #end
+
+                                #set ($riskRow = $riskMatrix.get($occurrenceExpanded))
+                                #if ($riskRow)
+                                    #set ($result = $riskRow.get($severity))
+                                    #set ($riskEvalStyle = "")
+                                        #if ($result == "LOW")
+                                        #set ($riskEvalStyle = "background-color:#92D050;") ## green
+                                        #elseif ($result == "MOD")
+                                        #set ($riskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                        #elseif ($result == "INT")
+                                        #set ($riskEvalStyle = "background-color:#FF0000;") ## red
+                                        #end
+                                #end
+                            #else
+                                #set ($riskRow = $riskMatrix.get($occurrence))
+                                #set ($riskResult = $riskRow.get($severity))
+                                #set ($riskStyle = "")
+                                #if ($riskResult == "LOW")
+                                  #set ($riskStyle = "background-color:#92D050;")
+                                #elseif ($riskResult == "MOD")
+                                  #set ($riskStyle = "background-color:#FFFF00;")
+                                #elseif ($riskResult == "INT")
+                                  #set ($riskStyle = "background-color:#FF0000;")
+                                #end
                             #end
                             <td style="$riskStyle">$!riskResult</td>
 
                             ## Rationale block
                             #if (!$rationalePrinted)
                               <td rowspan="$totalHarms">$!risk_control</td>
+                            #if ($postRisk)
                               <td rowspan="$totalHarms">$!analysisOfRisk</td>
-                              <td rowspan="$totalHarms">$!postOccurrence</td>
+                              #if ($expandOccurrence)
+                                <td rowspan="$totalHarms" >$!post_1</td>
+                                <td rowspan="$totalHarms" >$!post_2</td>
+                                <td rowspan="$totalHarms" >$!post_3</td>
+                                <td rowspan="$totalHarms" >$!post_4</td>
+                                <td rowspan="$totalHarms" >$!post_5</td>
+                              #else
+                                <td rowspan="$totalHarms">$!postOccurrence</td>
+                              #end
+                            #end
                               #set ($rationalePrinted = true)
                             #end
 
                             ## Post-Mitigation Risk Eval
+                        #if ($postRisk)
+                          #if ($expandedOccurrence)
+                                #if ($severity == "1 - Negligible")
+                                    #set ($postOccurrenceExpanded = $post_1)
+                                #elseif ($severity == "2 - Minor")
+                                    #set ($postOccurrenceExpanded = $post_2)
+                                #elseif ($severity == "3 - Serious")
+                                    #set ($postOccurrenceExpanded = $post_3)
+                                #elseif ($severity == "4 - Critical")
+                                    #set ($postOccurrenceExpanded = $post_4)
+                                #elseif ($severity == "5 - Catastrophic")
+                                    #set ($postOccurrenceExpanded = $post_5) 
+                                #end
+
+                                #set ($postRiskRow = $riskMatrix.get($postOccurrenceExpanded))
+                                #if ($postRiskRow)
+                                    #set ($postResult = $postRiskRow.get($severity))
+                                    #set ($postRiskEvalStyle = "")
+                                        #if ($postResult == "LOW")
+                                        #set ($postRiskEvalStyle = "background-color:#92D050;") ## green
+                                        #elseif ($postResult == "MOD")
+                                        #set ($postRiskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                        #elseif ($postResult == "INT")
+                                        #set ($postRiskEvalStyle = "background-color:#FF0000;") ## red
+                                        #end
+                                #end
+                          #else
                             #set ($postRow = $riskMatrix.get($postOccurrence))
                             #set ($postResult = $postRow.get($severity))
                             #set ($postStyle = "")
@@ -1150,8 +1313,28 @@ xmlns="http://www.w3.org/TR/REC-html40">
                             #elseif ($postResult == "INT")
                               #set ($postStyle = "background-color:#FF0000;")
                             #end
+                          #end
                             <td style="$postStyle">$!postResult</td>
-
+                        #end
+                        #if ($legacyId)
+                            #if (!$legacyPrinted)
+                                <td  rowspan="$totalHarms">$!legacy_id</td>
+                                #set ($legacyPrinted = true)
+                            #end
+                          #end
+                          #if ($riskCondition)
+                            #if (!$riskPrinted)
+                                <td  rowspan="$totalHarms" style = "text-align: center;">
+                                    #foreach ($dnRel in $dnRels)
+                                        #set ($linkedDoc = $dnRel.toDocument)
+                                        #if ($linkedDoc.documentType.id != 162)
+                                            <div>$!linkedDoc.documentKey</div>
+                                        #end
+                                    #end
+                                </td>
+                                #set ($riskPrinted = true)
+                            #end
+                          #end
                           </tr>
                         #end
                       #end
