@@ -1020,7 +1020,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <tr height=61 style='height:45.75pt'>
             <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
             <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
-            <td class=xl66 width=120 style='width:90pt;'>Part/Component Applicable</td>
+            <td class=xl66 width=120 style='width:90pt;'>Part/Assembly Applicable</td>
             <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
             <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
                 <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
@@ -1089,8 +1089,23 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
                       #foreach ($harmRel in $harmRels)
                       #set ($harmIndex = $harmIndex + 1)
-                      
-                   
+
+                          ## Reset variables to prevent stale values from prior iterations
+                          #set ($severity = "")
+                          #set ($result = "")
+                          #set ($postResult = "")
+                          #set ($riskEvalStyle = "")
+                          #set ($postRiskEvalStyle = "")
+                          #set ($_when_failure_occurs_phase_or_mode = "")
+                          #set ($occurrence = "")
+                          #set ($postOccurrence = "")
+                          #set ($sourcecomments = "")
+                          #set ($risk_control = "")
+                          #set ($hazards = "")
+                          #set ($partassembly_applicable = "")
+                          #set ($analysisOfRisk = "")
+                          #set ($legacy_id = "")
+
                           #set ($harmDoc = $harmRel.toDocument)
                           #set ($harmDocId = $harmDoc.documentType.id)
                           #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
@@ -1099,18 +1114,17 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
                           #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
                           #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partcomponent_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
+                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
                           #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
                           #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat))
                           #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
                                 #set ($riskRow = $riskMatrix.get($occurrence))
                                 #if ($riskRow)
                                     #set ($result = $riskRow.get($severity))
-                                    #set ($riskEvalStyle = "")
                                         #if ($result == "LOW")
-                                        #set ($riskEvalStyle = "background-color:#92D050;") ## green
+                                        #set ($riskEvalStyle = "background-color:#00CC66;") ## green
                                         #elseif ($result == "MOD")
-                                        #set ($riskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                        #set ($riskEvalStyle = "background-color:#FFF800;") ## yellow
                                         #elseif ($result == "INT")
                                         #set ($riskEvalStyle = "background-color:#FF0000;") ## red
                                         #end
@@ -1118,11 +1132,10 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                 #set ($postRiskRow = $riskMatrix.get($postOccurrence))
                                 #if ($postRiskRow)
                                     #set ($postResult = $postRiskRow.get($severity))
-                                    #set ($postRiskEvalStyle = "")
                                         #if ($postResult == "LOW")
-                                        #set ($postRiskEvalStyle = "background-color:#92D050;") ## green
+                                        #set ($postRiskEvalStyle = "background-color:#00CC66;") ## green
                                         #elseif ($postResult == "MOD")
-                                        #set ($postRiskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                        #set ($postRiskEvalStyle = "background-color:#FFF800;") ## yellow
                                         #elseif ($postResult == "INT")
                                         #set ($postRiskEvalStyle = "background-color:#FF0000;") ## red
                                         #end
@@ -1141,7 +1154,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partcomponent_applicable</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
                                 <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
@@ -1269,7 +1282,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <tr height=61 style='height:45.75pt'>
             <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
             <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
-            <td class=xl66 width=120 style='width:90pt;'>Part/Component Applicable</td>
+            <td class=xl66 width=120 style='width:90pt;'>Part/Assembly Applicable</td>
             <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
             <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
                 <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
@@ -1333,7 +1346,19 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
                       #foreach ($harmRel in $harmRels)
                       #set ($harmIndex = $harmIndex + 1)
-                      
+
+                          ## Reset variables to prevent stale values from prior iterations
+                          #set ($severity = "")
+                          #set ($result = "")
+                          #set ($riskEvalStyle = "")
+                          #set ($_when_failure_occurs_phase_or_mode = "")
+                          #set ($occurrence = "")
+                          #set ($sourcecomments = "")
+                          #set ($risk_control = "")
+                          #set ($hazards = "")
+                          #set ($partassembly_applicable = "")
+                          #set ($legacy_id = "")
+
                           #set ($harmDoc = $harmRel.toDocument)
                           #set ($harmDocId = $harmDoc.documentType.id)
                           #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
@@ -1341,18 +1366,17 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
                           #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
                           #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partcomponent_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
+                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
                           #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
                           #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
 
                               #set ($riskRow = $riskMatrix.get($occurrence))
                               #if ($riskRow)
                                 #set ($result = $riskRow.get($severity))
-                                  #set ($riskEvalStyle = "")
                                     #if ($result == "LOW")
-                                      #set ($riskEvalStyle = "background-color:#92D050;") ## green
+                                      #set ($riskEvalStyle = "background-color:#00CC66;") ## green
                                     #elseif ($result == "MOD")
-                                      #set ($riskEvalStyle = "background-color:#FFFF00;") ## yellow
+                                      #set ($riskEvalStyle = "background-color:#FFF800;") ## yellow
                                     #elseif ($result == "INT")
                                       #set ($riskEvalStyle = "background-color:#FF0000;") ## red
                                     #end
@@ -1373,7 +1397,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partcomponent_applicable</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
                                 <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
