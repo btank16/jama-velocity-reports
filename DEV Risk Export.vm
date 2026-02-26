@@ -1075,8 +1075,13 @@ xmlns="http://www.w3.org/TR/REC-html40">
                   #set ($harmRels = $returnRels)
                   #set ($harmCount = 0)
                   #if ($harmRels && $harmRels.size() > 0)
-                    #set ($harmCount = $harmRels.size())
-                  #else
+                    #foreach ($hRel in $harmRels)
+                      #if ($hRel.toDocument.documentType.id == 158)
+                        #set ($harmCount = $harmCount + 1)
+                      #end
+                    #end
+                  #end
+                  #if ($harmCount == 0)
                     #set ($harmCount = 1)
                   #end
                   #set ($totalHarms = $totalHarms + $harmCount)
@@ -1091,6 +1096,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                   #set ($riskControlInterfacePrinted = false)
                   #foreach ($dnRel in $dnRels)
                     #set ($hazardousDoc = $dnRel.toDocument)
+                    #set ($hazardousDocId = $hazardousDoc.documentType.id)
                     #getRelationships ($hazardousDoc, true)
                     #set ($harmRels = $returnRels)
                     #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
@@ -1101,7 +1107,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
                     #set ($harmIndex = 0)
 
                       #foreach ($harmRel in $harmRels)
-                      #set ($harmIndex = $harmIndex + 1)
 
                           ## Reset variables to prevent stale values from prior iterations
                           #set ($severity = "")
@@ -1154,6 +1159,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                         #end
                                 #end
                       #if ($harmDocId == 158 && $hazardousDocId == 177)
+                      #set ($harmIndex = $harmIndex + 1)
                       #set ($globalHarmIndex = $globalHarmIndex + 1)
                         #set ($borderStyle = "")
                           #if ($harmIndex == $hazardHarmCount)
@@ -1224,7 +1230,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
                                             #set ($rcDescription = $rcDoc.description)
-                                            <div>$!rcDoc.documentKey - #formatRichText($rcDescription)</div>
+                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
                                         #end
                                     #end
                                 </td>
@@ -1233,7 +1239,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
                                             #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "riskbenefit_analysis", $dateFormat))
-                                            <div>$!rcDoc.documentKey - #formatRichText($rcAnalysis)</div>
+                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
                                         #end
                                     #end
                                 </td>
@@ -1370,8 +1376,13 @@ xmlns="http://www.w3.org/TR/REC-html40">
                   #set ($harmRels = $returnRels)
                   #set ($harmCount = 0)
                   #if ($harmRels && $harmRels.size() > 0)
-                    #set ($harmCount = $harmRels.size())
-                  #else
+                    #foreach ($hRel in $harmRels)
+                      #if ($hRel.toDocument.documentType.id == 158)
+                        #set ($harmCount = $harmCount + 1)
+                      #end
+                    #end
+                  #end
+                  #if ($harmCount == 0)
                     #set ($harmCount = 1)
                   #end
                   #set ($totalHarms = $totalHarms + $harmCount)
@@ -1383,6 +1394,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                   #set ($rationalePrinted = false)
                   #foreach ($dnRel in $dnRels)
                     #set ($hazardousDoc = $dnRel.toDocument)
+                    #set ($hazardousDocId = $hazardousDoc.documentType.id)
                     #getRelationships ($hazardousDoc, true)
                     #set ($harmRels = $returnRels)
                     #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
@@ -1393,7 +1405,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
                     #set ($harmIndex = 0)
 
                       #foreach ($harmRel in $harmRels)
-                      #set ($harmIndex = $harmIndex + 1)
 
                           ## Reset variables to prevent stale values from prior iterations
                           #set ($severity = "")
@@ -1432,6 +1443,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                     #end
                               #end
                        #if ($harmDocId == 158 && $hazardousDocId == 177)
+                       #set ($harmIndex = $harmIndex + 1)
                        #set ($globalHarmIndex = $globalHarmIndex + 1)
                         #set ($borderStyle = "")
                           #if ($harmIndex == $hazardHarmCount)
@@ -1488,7 +1500,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
                                             #set ($rcDescription = $rcDoc.description)
-                                            <div>$!rcDoc.documentKey - #formatRichText($rcDescription)</div>
+                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
                                         #end
                                     #end
                                 </td>
@@ -1497,7 +1509,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
                                             #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "riskbenefit_analysis", $dateFormat))
-                                            <div>$!rcDoc.documentKey - #formatRichText($rcAnalysis)</div>
+                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
                                         #end
                                     #end
                                 </td>
