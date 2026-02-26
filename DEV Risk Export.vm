@@ -1125,11 +1125,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
                           #set ($postOccurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_post_risk_control", $dateFormat))
                           #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
-                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
+                          #set ($risk_control = "")
                           #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
+                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
                           #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
-                          #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat))
+                          #set ($analysisOfRisk = "")
                           #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
                                 #set ($riskRow = $riskMatrix.get($occurrence))
                                 #if ($riskRow)
@@ -1167,11 +1167,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatRichTextCell($partassembly_applicable)</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatPlainText($doc.description)</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
                                 <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatPlainText($sourcecomments)</td>
                             #set ($dFMEAprinted = true)
                           #end
 
@@ -1232,7 +1232,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                     #foreach ($dnRel in $dnRels)
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "analysis_of_risk_control", $dateFormat))
+                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "riskbenefit_analysis", $dateFormat))
                                             <div>$!rcDoc.documentKey - #formatRichText($rcAnalysis)</div>
                                         #end
                                     #end
@@ -1413,12 +1413,12 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
                           #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
                           #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
-                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
+                          #set ($risk_control = "")
                           #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
+                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partcomponent_applicable", $dateFormat))
                           #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
                           #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
-                          #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat))
+                          #set ($analysisOfRisk = "")
 
                               #set ($riskRow = $riskMatrix.get($occurrence))
                               #if ($riskRow)
@@ -1447,11 +1447,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
                           #if (!$dFMEAprinted)
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatRichTextCell($partassembly_applicable)</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatPlainText($doc.description)</td>
                             <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
                                 <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
+                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">#formatPlainText($sourcecomments)</td>
                             #set ($dFMEAprinted = true)
                           #end
 
@@ -1496,7 +1496,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                                     #foreach ($dnRel in $dnRels)
                                         #set ($rcDoc = $dnRel.toDocument)
                                         #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "analysis_of_risk_control", $dateFormat))
+                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "riskbenefit_analysis", $dateFormat))
                                             <div>$!rcDoc.documentKey - #formatRichText($rcAnalysis)</div>
                                         #end
                                     #end

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:velocity.jamasoftware.com)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:help.jamasoftware.com)"
     ]
   }
 }
