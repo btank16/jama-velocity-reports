@@ -989,6 +989,10 @@ xmlns="http://www.w3.org/TR/REC-html40">
           <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
           <col width=175 style='mso-width-source:userset;mso-width-alt:6400;width:131pt'>
         #end
+        #if ($riskControlInterface)
+          <col width=301 style='mso-width-source:userset;mso-width-alt:11008;width:280pt'>
+          <col width=301 style='mso-width-source:userset;mso-width-alt:11008;width:280pt'>
+        #end
         #if ($legacyId)
           <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
         #end
@@ -1020,6 +1024,10 @@ xmlns="http://www.w3.org/TR/REC-html40">
             <td class=xl66 width=259 style='border-left:none;width:194pt'>Risk Control Description</td>
             <td class=xl66 width=178 style='border-left:none;width:134pt'>Risk Control(s)</td>
             <td class=xl66 width=175 style='border-left:none;width:131pt'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
+          #end
+          #if ($riskControlInterface)
+            <td class=xl66 width=301 style='border-left:none;width:280pt'>Risk Control(s)</td>
+            <td class=xl66 width=301 style='border-left:none;width:280pt'>Analysis of Risk Controls</td>
           #end
           #if ($legacyId)
             <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
@@ -1081,6 +1089,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
                     #set ($useTaskPrinted = false)
                     #set ($legacyPrinted = false)
                     #set ($riskPrinted = false)
+                    #set ($riskControlInterfacePrinted = false)
                     #foreach ($ue in $useErrorData)
                       #set ($ueDoc = $ue.useError)
                       #set ($useErrorHarmCount = 0)
@@ -1172,15 +1181,21 @@ xmlns="http://www.w3.org/TR/REC-html40">
                             <td style="$postStyle">$!postResult</td>
                         #end
 
+                            ## Fetch downstream rels from Use Error for riskCondition and riskControlInterface
+                          #if ($riskCondition || $riskControlInterface)
+                            #if (!$riskPrinted && !$riskControlInterfacePrinted)
+                              #getRelationships ($ueDoc, true)
+                              #set ($dnRels = $returnRels)
+                            #end
+                          #end
+
                             ## Risk Condition block
                           #if ($riskCondition)
                             #if (!$riskPrinted)
                               <td rowspan="$totalHarms">$!risk_control</td>
                               <td rowspan="$totalHarms" style="text-align: center;">
-                                #getRelationships ($ueDoc, true)
-                                #set ($riskControlRels = $returnRels)
-                                #foreach ($rcRel in $riskControlRels)
-                                  #set ($linkedDoc = $rcRel.toDocument)
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($linkedDoc = $dnRel.toDocument)
                                   #if ($linkedDoc.documentType.id != 177)
                                     <div>$!linkedDoc.documentKey</div>
                                   #end
@@ -1188,6 +1203,31 @@ xmlns="http://www.w3.org/TR/REC-html40">
                               </td>
                               <td rowspan="$totalHarms">$!analysisOfRisk</td>
                               #set ($riskPrinted = true)
+                            #end
+                          #end
+
+                            ## Risk Control Interface block
+                          #if ($riskControlInterface)
+                            #if (!$riskControlInterfacePrinted)
+                              <td rowspan="$totalHarms">
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($rcDoc = $dnRel.toDocument)
+                                  #if ($rcDoc.documentType.id == 182)
+                                    #set ($rcDescription = $rcDoc.description)
+                                    <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
+                                  #end
+                                #end
+                              </td>
+                              <td rowspan="$totalHarms">
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($rcDoc = $dnRel.toDocument)
+                                  #if ($rcDoc.documentType.id == 182)
+                                    #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "analysis_of_risk_control", $dateFormat))
+                                    <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
+                                  #end
+                                #end
+                              </td>
+                              #set ($riskControlInterfacePrinted = true)
                             #end
                           #end
 
