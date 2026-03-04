@@ -5320,7 +5320,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
       <td class=xl365 width=707 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS<span style='mso-spacerun:yes'></span></td>
       <td class=xl367 width=201 style='border-left:none;width:151pt;border:2.0pt solid black;'>USER</td>
       <td class=xl368 width=170 style='width:128pt border:2.0pt solid black;'>USE ENVIRONMENT</td>
-	  <td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>ASSOCIATED COMPONENT</td>
+	  <td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>PARTS/ASSEMBLIES</td>
 	  <td style='border-left:2.0pt solid black;'></td>
     </tr>
 
@@ -5390,9 +5390,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 			#set ($childPrinted = false)
 			#set ($bottomBorder = 1)
 			#foreach ($childItemL2 in $childItemsL2)
-			#set ($user = $velocityReportUtil.getValueForField($childItemL2, "user_group", $dateFormat))
-			#set ($environment = $velocityReportUtil.getValueForField($childItemL2, "use_environment", $dateFormat))
-			#set ($component = $velocityReportUtil.getValueForField($childItemL2, "associated_component", $dateFormat))
+			#set ($user = $velocityReportUtil.getValueForField($childItemL2, "user_groups", $dateFormat))
+			#set ($environment = $velocityReportUtil.getValueForField($childItemL2, "use_environments", $dateFormat))
+			#set ($component = $velocityReportUtil.getValueForField($childItemL2, "partsassemblies", $dateFormat))
 
 			<tr #if ($isFirst) style="border-top:2pt solid black;"#end style='border-left:2pt solid black; border-right:2pt solid black;'>
 				#if (!$docPrinted)
@@ -5447,7 +5447,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 			<td class=xl365 width=707 style='mso-ignore:colspan;border:2.0pt solid black;'>SUBTASKS<span style='mso-spacerun:yes'></span></td>
 			<td class=xl367 width=201 style='border-left:none;width:151pt;border:2.0pt solid black;'>USER</td>
 			<td class=xl368 width=170 style='width:128pt border:2.0pt solid black;'>USE ENVIRONMENT</td>
-			<td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>ASSOCIATED COMPONENT</td>
+			<td class=xl368 width=220 style='width:128pt border:2.0pt solid black;'>PARTS/ASSEMBLIES</td>
 		<td style='border-left:2.0pt solid black;'></td>
 		</tr>
 
@@ -5477,9 +5477,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 				#set ($docPrinted = false)
 
 				#foreach ($childItemL1 in $childItemsL1)
-				#set ($user = $velocityReportUtil.getValueForField($childItemL1, "user_group", $dateFormat))
-				#set ($environment = $velocityReportUtil.getValueForField($childItemL1, "use_environment", $dateFormat))
-				#set ($component = $velocityReportUtil.getValueForField($childItemL1, "associated_component", $dateFormat))
+				#set ($user = $velocityReportUtil.getValueForField($childItemL1, "user_groups", $dateFormat))
+				#set ($environment = $velocityReportUtil.getValueForField($childItemL1, "use_environments", $dateFormat))
+				#set ($component = $velocityReportUtil.getValueForField($childItemL1, "partsassemblies", $dateFormat))
 
 				<tr #if ($isFirst) style="border-top:2pt solid black;"#end style='border-left:2pt solid black; border-right:2pt solid black;'>
 					#if (!$docPrinted)
