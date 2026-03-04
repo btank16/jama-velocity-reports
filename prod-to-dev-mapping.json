@@ -1,0 +1,815 @@
+{
+  "metadata": {
+    "description": "Maps PROD Jama item types and fields to DEV equivalents. Used to convert PROD .vm report templates into DEV versions.",
+    "created": "2026-03-04",
+    "conventions": {
+      "prod_only_fields": "Fields that exist in PROD but have no DEV equivalent — must be removed or conditionally skipped in DEV templates.",
+      "dev_only_fields": "Fields that exist in DEV but not PROD — may need to be added to DEV templates.",
+      "field_map keys": "Keyed by PROD unique_field_name. If the unique_field_name changes, dev.unique_field_name shows the new name."
+    }
+  },
+
+  "pick_list_map": {
+    "_comment": "PROD pick list name → DEV pick list name. Only lists that differ are included.",
+    "Verification Method": "Medical Device Framework - Verification Method",
+    "Risk Management - Hazards": "Hazards",
+    "Risk Management - Phase or Mode": "SPR Risk Management - Phase or Mode",
+    "Risk Management - Occurrence": "SPR Risk Management - Occurrence",
+    "Risk Management - Risk Category": "SPR Risk Management - Risk Category",
+    "Risk Management - Harm Type": "SPR Risk Management - Harm Type",
+    "Risk Management - Harm Whom": "SPR Risk Management - Harm Whom",
+    "Risk Management - Severity": "SPR Risk Management - Severity",
+    "Risk Management - Hazard/Harm Applies Yes/No": "SPR Risk Management - Hazard/Harm Applies Yes/No",
+    "Validation Methods": "SPR Validation Methods",
+    "User Groups": "User Pick List",
+    "Test Run Workflow Status": "Medical Device Framework - Test Run Workflow Status",
+    "Z_DEPRECATED - Medical Device Framework - Documentation Status": "Medical Device Framework - Documentation Status",
+    "SPR - VendorWorkflow Status": "SPR-VendorWorkflow Status",
+    "Usability - Critical Task Yes/No": "Risk Management - Yes/No"
+  },
+
+  "item_type_map": {
+
+    "22": {
+      "prod": { "id": 22, "key": "ATT", "name": "Attachment" },
+      "dev":  { "id": 22, "key": "ATT", "name": "Attachment" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical in both environments.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "30": {
+      "prod": { "id": 30, "key": "CMP", "name": "Component" },
+      "dev":  { "id": 30, "key": "CMP", "name": "Component" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical in both environments.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "138": {
+      "prod": { "id": 138, "key": "COMPDIR", "name": "Component Requirement" },
+      "dev":  { "id": 150, "key": "DS", "name": "Component Requirement" },
+      "id_changed": true,
+      "key_changed": true,
+      "notes": "IDs 138/150 are SWAPPED between PROD and DEV. PROD 138 = Component Req, DEV 150 = Component Req. PROD 150 = Subsystem Req, DEV 138 = Subsystem Req.",
+      "field_map": {
+        "verification_methods": {
+          "prod": { "label": "Verification Method(s)", "unique_field_name": "verification_methods", "pick_list": "Verification Method" },
+          "dev":  { "label": "Verification Method(s)", "unique_field_name": "verification_methods", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["pick_list"]
+        },
+        "safety_requirement_legacy": {
+          "prod": { "label": "Safety Requirement (Legacy)?", "unique_field_name": "safety_requirement_legacy", "pick_list": "Risk Management - Yes/No" },
+          "dev":  { "label": "Safety Requirement?", "unique_field_name": "safety_requirement", "pick_list": "Risk Management - Yes/No" },
+          "changes": ["unique_field_name", "label"]
+        },
+        "workflow_status": {
+          "prod": { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "SPR - VendorWorkflow Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "status", "pick_list": "SPR - Common Workflow Status" },
+          "changes": ["unique_field_name", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "legacy_epr_id__review_if_applicable", "label": "Legacy EPR ID & Review (if applicable)" },
+        { "unique_field_name": "discipline", "label": "Do Not Use", "notes": "deprecated in PROD" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "disciplines", "label": "Discipline(s)", "field_type": "Multi Select", "pick_list": "Medical Device Framework - Disciplines" }
+      ]
+    },
+
+    "34": {
+      "prod": { "id": 34, "key": "CORE", "name": "Core" },
+      "dev":  { "id": 34, "key": "CORE", "name": "Core" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical in both environments.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "137": {
+      "prod": { "id": 137, "key": "DO", "name": "Design Output" },
+      "dev":  { "id": 137, "key": "DO", "name": "Design Output" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Name field has different label in DEV ('Document Number with Revision' vs 'Name').",
+      "field_map": {
+        "workflow": {
+          "prod": { "label": "Workflow Status", "unique_field_name": "workflow", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "SPR-VendorWorkflow Status" },
+          "changes": ["unique_field_name", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "document_id__revision", "label": "Document ID" },
+        { "unique_field_name": "legacy_id", "label": "Legacy ID" },
+        { "unique_field_name": "critical_design_output", "label": "[Do Not Use]", "notes": "deprecated" },
+        { "unique_field_name": "workflow_status", "label": "[Do Not Use]", "notes": "deprecated" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "135": {
+      "prod": { "id": 135, "key": "DOC", "name": "Documentation" },
+      "dev":  { "id": 135, "key": "DOC", "name": "Documentation" },
+      "id_changed": false,
+      "key_changed": false,
+      "field_map": {
+        "status": {
+          "prod": { "label": "Workflow Status", "unique_field_name": "status", "pick_list": "Z_DEPRECATED - Medical Device Framework - Documentation Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "status", "pick_list": "Medical Device Framework - Documentation Status" },
+          "changes": ["pick_list"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "171": {
+      "prod": { "id": 171, "key": "DUMMY", "name": "dummy item" },
+      "dev":  { "id": 171, "key": "DUMMY", "name": "dummy item" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Essentially identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "180": {
+      "prod": { "id": 180, "key": "FMEA", "name": "Fault/Failure" },
+      "dev":  { "id": 180, "key": "FMEA", "name": "Faults and Failures" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "CRITICAL for Risk Export and URRA Export. Many field and pick list differences. Name differs slightly.",
+      "field_map": {
+        "hazards": {
+          "prod": { "label": "General Hazard(s)", "unique_field_name": "hazards", "field_type": "Multi Select", "pick_list": "Risk Management - Hazards" },
+          "dev":  { "label": "Hazard(s)", "unique_field_name": "hazards", "field_type": "Multi Select", "pick_list": "Hazards" },
+          "changes": ["label", "pick_list"]
+        },
+        "description": {
+          "prod": { "label": "Fault or Failure", "unique_field_name": "description", "control": "Rich Text" },
+          "dev":  { "label": "Fault or Failure", "unique_field_name": "description", "control": "Text Box" },
+          "changes": ["control"]
+        },
+        "partassembly_applicable": {
+          "prod": { "label": "Part/Assembly Applicable", "unique_field_name": "partassembly_applicable", "field_type": "Multi Select", "pick_list": "Parts/Assemblies" },
+          "dev":  { "label": "Part/Component Applicable", "unique_field_name": "partcomponent_applicable", "field_type": "Text Box" },
+          "changes": ["unique_field_name", "label", "field_type", "pick_list_removed"]
+        },
+        "when_failure_occurs_phase_or_mode": {
+          "prod": { "label": "When Failure Occurs (Phase or Mode)", "unique_field_name": "when_failure_occurs_phase_or_mode", "pick_list": "Risk Management - Phase or Mode" },
+          "dev":  { "label": "When Failure Occurs (Phase or Mode)", "unique_field_name": "when_failure_occurs_phase_or_mode", "pick_list": "SPR Risk Management - Phase or Mode" },
+          "changes": ["pick_list"]
+        },
+        "occurrence_score_pre_risk_control": {
+          "prod": { "label": "Occurrence Score (Pre Risk Control)", "unique_field_name": "occurrence_score_pre_risk_control", "pick_list": "Risk Management - Occurrence" },
+          "dev":  { "label": "Occurrence Score (Pre-Mitigation)", "unique_field_name": "occurrence_score_pre_risk_control", "pick_list": "SPR Risk Management - Occurrence" },
+          "changes": ["label", "pick_list"]
+        },
+        "max_risk_analysis_premit": {
+          "prod": { "label": "Max Risk Analysis (Pre-Mit)", "unique_field_name": "max_risk_analysis_premit", "pick_list": "Risk Management - Risk Category" },
+          "dev":  { "label": "Max Risk Analysis (Pre-Mitigation)", "unique_field_name": "max_risk_analysis_premit", "pick_list": "SPR Risk Management - Risk Category" },
+          "changes": ["label", "pick_list"]
+        },
+        "rationale": {
+          "prod": { "label": "Scoring Source", "unique_field_name": "rationale" },
+          "dev":  { "label": "Scoring Source/Comments", "unique_field_name": "rationale" },
+          "changes": ["label"]
+        },
+        "occurrence_score_post_risk_control": {
+          "prod": { "label": "Occurrence Score (Post Risk Control)", "unique_field_name": "occurrence_score_post_risk_control", "pick_list": "Risk Management - Occurrence" },
+          "dev":  { "label": "Occurrence Score (Post-Mitigation)", "unique_field_name": "occurrence_score_post_risk_control", "pick_list": "SPR Risk Management - Occurrence" },
+          "changes": ["label", "pick_list"]
+        },
+        "max_risk_analysis_postrisk_control": {
+          "prod": { "label": "Max Risk Analysis (Post-Risk Control)", "unique_field_name": "max_risk_analysis_postrisk_control", "pick_list": "Risk Management - Risk Category" },
+          "dev":  { "label": "Max Risk Analysis (Post-Mitigation)", "unique_field_name": "max_risk_analysis_postmitigation", "pick_list": "SPR Risk Management - Risk Category" },
+          "changes": ["unique_field_name", "label", "pick_list"]
+        },
+        "workflow_statuscommon": {
+          "prod": { "label": "Workflow Status", "unique_field_name": "workflow_statuscommon", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "Risk Management Workflow Status - New" },
+          "changes": ["unique_field_name", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "risk_control_comments", "label": "Comments" },
+        { "unique_field_name": "residual_risk_acceptable", "label": "Residual Risk Acceptable?", "pick_list": "Risk Management - Yes/No" },
+        { "unique_field_name": "benefitrisk_analysis", "label": "Benefit-Risk Analysis" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "32": {
+      "prod": { "id": 32, "key": "FLD", "name": "Folder" },
+      "dev":  { "id": 32, "key": "FLD", "name": "Folder" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "158": {
+      "prod": { "id": 158, "key": "HARM", "name": "Harm" },
+      "dev":  { "id": 158, "key": "HARM", "name": "Harm [HRM]" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "CRITICAL for Risk Export and URRA Export. Several pick list name changes. DEV has active fields that are [Do Not Use] in PROD.",
+      "field_map": {
+        "type_of_harm": {
+          "prod": { "label": "Type of Harm", "unique_field_name": "type_of_harm", "pick_list": "Risk Management - Harm Type" },
+          "dev":  { "label": "Type of Harm", "unique_field_name": "type_of_harm", "pick_list": "SPR Risk Management - Harm Type" },
+          "changes": ["pick_list"]
+        },
+        "harm_whom": {
+          "prod": { "label": "Harm Whom", "unique_field_name": "harm_whom", "pick_list": "Risk Management - Harm Whom" },
+          "dev":  { "label": "Harm Whom", "unique_field_name": "harm_whom", "pick_list": "SPR Risk Management - Harm Whom" },
+          "changes": ["pick_list"]
+        },
+        "severity_of_harm": {
+          "prod": { "label": "Severity Of Harm", "unique_field_name": "severity_of_harm", "pick_list": "Risk Management - Severity" },
+          "dev":  { "label": "Severity Of Harm", "unique_field_name": "severity_of_harm", "pick_list": "SPR Risk Management - Severity" },
+          "changes": ["pick_list"]
+        },
+        "harm_applicable": {
+          "prod": { "label": "Harm Applicable?", "unique_field_name": "harm_applicable", "pick_list": "Risk Management - Hazard/Harm Applies Yes/No" },
+          "dev":  { "label": "Harm Applicable?", "unique_field_name": "harm_applicable", "pick_list": "SPR Risk Management - Hazard/Harm Applies Yes/No" },
+          "changes": ["pick_list"]
+        },
+        "description": {
+          "prod": { "label": "[Do Not Use]", "unique_field_name": "description", "notes": "deprecated in PROD" },
+          "dev":  { "label": "Comments", "unique_field_name": "description", "notes": "active in DEV" },
+          "changes": ["label", "status_change_deprecated_to_active"]
+        },
+        "workflow_status": {
+          "prod": { "label": "[Do Not Use]", "unique_field_name": "workflow_status", "notes": "deprecated in PROD" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "Risk Management Workflow Status", "notes": "active in DEV" },
+          "changes": ["status_change_deprecated_to_active"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "177": {
+      "prod": { "id": 177, "key": "HZ", "name": "Hazardous Situation" },
+      "dev":  { "id": 177, "key": "HZ", "name": "Hazardous Situation" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "CRITICAL for Risk Export and URRA Export. Field semantics shifted significantly between environments.",
+      "field_map": {
+        "name": {
+          "prod": { "label": "Name", "unique_field_name": "name" },
+          "dev":  { "label": "Hazardous Situation", "unique_field_name": "name" },
+          "changes": ["label"]
+        },
+        "description": {
+          "prod": { "label": "Hazardous Situation", "unique_field_name": "description" },
+          "dev":  { "label": "Applicable Component(s)", "unique_field_name": "description" },
+          "changes": ["label", "semantic_meaning_changed"]
+        },
+        "general_hazards": {
+          "prod": { "label": "[Do Not Use]", "unique_field_name": "general_hazards", "notes": "deprecated in PROD" },
+          "dev":  { "label": "General Hazard(s)", "unique_field_name": "general_hazards", "field_type": "Multi Select", "pick_list": "Hazards", "notes": "active in DEV" },
+          "changes": ["status_change_deprecated_to_active"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "legacy_id_if_applicable", "label": "Legacy ID (if applicable)" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "new", "label": "New", "field_type": "Text Field" },
+        { "unique_field_name": "assignedTo", "label": "Assigned", "notes": "active in DEV, deprecated in PROD" },
+        { "unique_field_name": "release", "label": "Release", "notes": "active in DEV, deprecated in PROD" }
+      ]
+    },
+
+    "182": {
+      "prod": { "id": 182, "key": "RC", "name": "Risk Control" },
+      "dev":  { "id": 182, "key": "RC", "name": "Risk Control" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Used in Risk Export and URRA Export. PROD 'analysis_of_risk_control' maps to DEV 'riskbenefit_analysis'.",
+      "field_map": {
+        "analysis_of_risk_control": {
+          "prod": { "label": "Analysis of Risk Control", "unique_field_name": "analysis_of_risk_control", "field_type": "Text Box" },
+          "dev":  { "label": "Risk-Benefit Analysis", "unique_field_name": "riskbenefit_analysis", "field_type": "Text Box" },
+          "changes": ["unique_field_name", "label"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": [
+        { "unique_field_name": "residual_risk", "label": "Residual Risk?", "field_type": "Pick List", "pick_list": "Risk Management - Yes/No" }
+      ]
+    },
+
+    "183": {
+      "prod": { "id": 183, "key": "STV", "name": "STRIDE Threat/Vulnerability" },
+      "dev":  { "id": 183, "key": "SRA", "name": "Security Risk Assessment (CVSS 4.0)" },
+      "id_changed": false,
+      "key_changed": true,
+      "notes": "Same concept (cyber security risk), completely different name and key. Many fields are similar but some unique_field_names differ. No .vm template currently uses this type.",
+      "field_map": {
+        "potential_safety_impact": {
+          "prod": { "label": "Potential Safety Impact?", "unique_field_name": "potential_safety_impact" },
+          "dev":  { "label": "Potential Safety Impact?", "unique_field_name": "potential_safety__efficacy_impact" },
+          "changes": ["unique_field_name"]
+        },
+        "data_flow": {
+          "prod": { "label": "Data Flow", "unique_field_name": "data_flow", "field_type": "Text Field" },
+          "dev":  { "label": "Data Flow", "unique_field_name": "data_flow", "field_type": "Text Box" },
+          "changes": ["field_type"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "notescomments", "label": "Notes/Comments" },
+        { "unique_field_name": "legacy_id", "label": "Legacy ID" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "31": {
+      "prod": { "id": 31, "key": "SET", "name": "Set" },
+      "dev":  { "id": 31, "key": "SET", "name": "Set" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "170": {
+      "prod": { "id": 170, "key": "SAS", "name": "Software Architecture Specification" },
+      "dev":  { "id": 170, "key": "SAS", "name": "Software Architecture Specification [SAS]" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "DEV name has [SAS] suffix. DEV is simpler (fewer fields).",
+      "field_map": {},
+      "prod_only_fields": [
+        { "unique_field_name": "rationalecomments", "label": "Rationale/Comments" },
+        { "unique_field_name": "legacy_id_if_applicable", "label": "Legacy ID (if applicable)" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "167": {
+      "prod": { "id": 167, "key": "SDS", "name": "Software Design Specification" },
+      "dev":  { "id": 167, "key": "SDS", "name": "Software Design Specification [SDS]" },
+      "id_changed": false,
+      "key_changed": false,
+      "field_map": {
+        "verification_methods": {
+          "prod": { "unique_field_name": "verification_methods", "pick_list": "Verification Method" },
+          "dev":  { "unique_field_name": "verification_methods", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["pick_list"]
+        },
+        "safety_requirement_legacy": {
+          "prod": { "label": "Safety Requirement (Legacy)?", "unique_field_name": "safety_requirement_legacy" },
+          "dev":  { "label": "Safety Requirement?", "unique_field_name": "safety_requirement" },
+          "changes": ["unique_field_name", "label"]
+        },
+        "workflow_status": {
+          "prod": { "unique_field_name": "workflow_status", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "unique_field_name": "workflow", "pick_list": "SPR Risk Management - Workflow Status" },
+          "changes": ["unique_field_name", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "acceptance_criteria", "label": "Acceptance Criteria", "notes": "present in PROD, not in DEV" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "166": {
+      "prod": { "id": 166, "key": "SRS", "name": "Software Requirement Specification" },
+      "dev":  { "id": 166, "key": "SRS", "name": "Software Requirement Specification [SRS]" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Used by DIR Export and User Needs Export (conditional on type 166). Field name for verification methods differs.",
+      "field_map": {
+        "verification_method": {
+          "prod": { "label": "Verification Method", "unique_field_name": "verification_method", "pick_list": "Verification Method" },
+          "dev":  { "label": "Verification Method(s)", "unique_field_name": "verification_methods", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["unique_field_name", "label", "pick_list"]
+        },
+        "workflow_status": {
+          "prod": { "unique_field_name": "workflow_status", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "unique_field_name": "workflow", "pick_list": "SPR Risk Management - Workflow Status" },
+          "changes": ["unique_field_name", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "justification_for_not_a_safety_requirement", "label": "Rationale for NOT Safety Related (legacy)" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "168": {
+      "prod": { "id": 168, "key": "SWVEP", "name": "Software Verification" },
+      "dev":  { "id": 168, "key": "SW_VER", "name": "SW Verification [VEP]" },
+      "id_changed": false,
+      "key_changed": true,
+      "field_map": {
+        "standards_driven_verification": {
+          "prod": { "label": "N/A", "unique_field_name": "N/A", "notes": "field does not exist in PROD type 168" },
+          "dev":  { "label": "Standards Driven?", "unique_field_name": "standards_driven" },
+          "changes": ["added_in_dev"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": [
+        { "unique_field_name": "standards_driven", "label": "Standards Driven?", "pick_list": "Risk Management - Yes/No" },
+        { "unique_field_name": "test_method_validation_required", "label": "Test Method Validation Required?", "pick_list": "Risk Management - Yes/No" }
+      ]
+    },
+
+    "150": {
+      "prod": { "id": 150, "key": "SUBDIR", "name": "Subsystem Requirement" },
+      "dev":  { "id": 138, "key": "SUBSR", "name": "Subsystem Requirement" },
+      "id_changed": true,
+      "key_changed": true,
+      "notes": "IDs 138/150 are SWAPPED between environments. PROD 150 = Subsystem Req, DEV 138 = Subsystem Req.",
+      "field_map": {
+        "verification_methods": {
+          "prod": { "unique_field_name": "verification_methods", "pick_list": "Verification Method" },
+          "dev":  { "unique_field_name": "verification_methods", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["pick_list"]
+        },
+        "safety_requirement_legacy": {
+          "prod": { "label": "Safety Requirement (Legacy)?", "unique_field_name": "safety_requirement_legacy" },
+          "dev":  { "label": "Safety Requirement?", "unique_field_name": "safety_requirement" },
+          "changes": ["unique_field_name", "label"]
+        },
+        "status": {
+          "prod": { "label": "Workflow Status", "unique_field_name": "status", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "SPR-VendorWorkflow Status" },
+          "changes": ["unique_field_name", "pick_list"]
+        },
+        "discipline": {
+          "prod": { "label": "Do Not Use", "unique_field_name": "discipline", "field_type": "Multi Select", "notes": "deprecated in PROD" },
+          "dev":  { "label": "Discipline(s)", "unique_field_name": "discipline", "field_type": "Pick List", "pick_list": "Medical Device Framework - Disciplines", "notes": "active single-select in DEV" },
+          "changes": ["field_type", "status_change_deprecated_to_active"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "legacy_epr_id__review_if_applicable", "label": "Legacy EPR ID & Review (if applicable)" },
+        { "unique_field_name": "stakeholders", "label": "Do Not Use (deprecated)" }
+      ],
+      "dev_only_fields": []
+    },
+
+    "139": {
+      "prod": { "id": 139, "key": "ARCH", "name": "System Architecture" },
+      "dev":  { "id": 139, "key": "ARCH", "name": "System Architecture" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "149": {
+      "prod": { "id": 149, "key": "DIR", "name": "System Requirement" },
+      "dev":  { "id": 140, "key": "SR", "name": "System Requirement" },
+      "id_changed": true,
+      "key_changed": true,
+      "notes": "Different IDs AND keys. DIR Export.vm may reference this type indirectly.",
+      "field_map": {
+        "verification_methods": {
+          "prod": { "unique_field_name": "verification_methods", "pick_list": "Verification Method" },
+          "dev":  { "unique_field_name": "verification_methods", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["pick_list"]
+        },
+        "safety_requirement": {
+          "prod": { "label": "Safety Requirement (Legacy)?", "unique_field_name": "safety_requirement" },
+          "dev":  { "label": "Safety Requirement?", "unique_field_name": "safety_requirement" },
+          "changes": ["label"]
+        },
+        "status": {
+          "prod": { "label": "Workflow Staus", "unique_field_name": "status", "pick_list": "SPR - Common Workflow Status" },
+          "dev":  { "label": "Workflow Status", "unique_field_name": "workflow_status", "pick_list": "SPR-VendorWorkflow Status" },
+          "changes": ["unique_field_name", "label", "pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "legacy_epr_id__review_if_applicable", "label": "Legacy EPR ID & Review (if applicable)" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "impacted_disciplines", "label": "Discipline(s)", "field_type": "Multi Select", "pick_list": "Medical Device Framework - Disciplines" }
+      ]
+    },
+
+    "36": {
+      "prod": { "id": 36, "key": "TSTCY", "name": "Test Cycle" },
+      "dev":  { "id": 36, "key": "TSTCY", "name": "Test Cycle" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Essentially identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "35": {
+      "prod": { "id": 35, "key": "TSTPL", "name": "Test Plan" },
+      "dev":  { "id": 35, "key": "TSTPL", "name": "Test Plan" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Essentially identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "37": {
+      "prod": { "id": 37, "key": "TSTRN", "name": "Test Run" },
+      "dev":  { "id": 37, "key": "TSTRN", "name": "Test Run" },
+      "id_changed": false,
+      "key_changed": false,
+      "field_map": {
+        "workflow_status": {
+          "prod": { "unique_field_name": "workflow_status", "pick_list": "Test Run Workflow Status" },
+          "dev":  { "unique_field_name": "workflow_status", "pick_list": "Medical Device Framework - Test Run Workflow Status" },
+          "changes": ["pick_list"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "33": {
+      "prod": { "id": 33, "key": "TXT", "name": "Text" },
+      "dev":  { "id": 33, "key": "TXT", "name": "Text" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Identical.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "154": {
+      "prod": { "id": 154, "key": "UE", "name": "Use Error" },
+      "dev":  { "id": 154, "key": "UE", "name": "Use Error" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "CRITICAL for URRA Export. Significant field differences — DEV is simpler with fewer risk analysis fields.",
+      "field_map": {
+        "user_groups": {
+          "prod": { "label": "User Group(s)", "unique_field_name": "user_groups", "field_type": "Multi Select", "pick_list": "User Groups" },
+          "dev":  { "label": "User", "unique_field_name": "user", "field_type": "Pick List", "pick_list": "SPR Usability - User" },
+          "changes": ["unique_field_name", "label", "field_type", "pick_list"]
+        },
+        "hazards": {
+          "prod": { "unique_field_name": "hazards", "pick_list": "Risk Management - Hazards" },
+          "dev":  { "unique_field_name": "hazards", "pick_list": "Hazards" },
+          "changes": ["pick_list"]
+        },
+        "occurrence_score_pre_risk_control": {
+          "prod": { "unique_field_name": "occurrence_score_pre_risk_control", "pick_list": "Risk Management - Occurrence" },
+          "dev":  { "unique_field_name": "occurrence_score_pre_risk_control", "pick_list": "SPR Risk Management - Occurrence" },
+          "changes": ["pick_list"]
+        },
+        "occurrence_score_post_risk_control": {
+          "prod": { "unique_field_name": "occurrence_score_post_risk_control", "pick_list": "Risk Management - Occurrence" },
+          "dev":  { "unique_field_name": "occurrence_score_post_risk_control", "pick_list": "SPR Risk Management - Occurrence" },
+          "changes": ["pick_list"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "max_risk_analysis_pre_risk_control", "label": "Max Risk Analysis (Pre Risk Control)" },
+        { "unique_field_name": "comments", "label": "Comments" },
+        { "unique_field_name": "analysis_of_risk_controls__new_or_exacerbated_risk", "label": "Analysis of Risk Controls - New or Exacerbated Risk?" },
+        { "unique_field_name": "max_risk_analysis_post_risk_control", "label": "Max Risk Analysis (Post Risk Control)" },
+        { "unique_field_name": "residual_risk_acceptable", "label": "Residual Risk Acceptable?" },
+        { "unique_field_name": "benefitrisk_analysis", "label": "Benefit-Risk Analysis" },
+        { "unique_field_name": "workflow_status", "label": "Workflow Status", "pick_list": "SPR - Common Workflow Status" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "critical_task", "label": "Critical Task?", "pick_list": "SPR Usability - Critical Task" }
+      ]
+    },
+
+    "176": {
+      "prod": { "id": 176, "key": "UT", "name": "Use Tasks" },
+      "dev":  { "id": 176, "key": "UT", "name": "User Tasks" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "CRITICAL for Use Task Export and URRA Export. Name differs. Several fields changed from Multi Select to Text Box in DEV.",
+      "field_map": {
+        "user_groups": {
+          "prod": { "label": "User Group(s)", "unique_field_name": "user_groups", "field_type": "Multi Select", "pick_list": "User Groups" },
+          "dev":  { "label": "User Group", "unique_field_name": "user_group", "field_type": "Text Box" },
+          "changes": ["unique_field_name", "label", "field_type", "pick_list_removed"]
+        },
+        "use_environments": {
+          "prod": { "label": "Use Environment", "unique_field_name": "use_environments", "field_type": "Multi Select", "pick_list": "Use Environments" },
+          "dev":  { "label": "Use Environment", "unique_field_name": "use_environment", "field_type": "Text Box" },
+          "changes": ["unique_field_name", "field_type", "pick_list_removed"]
+        },
+        "critical_taskQ": {
+          "prod": { "label": "Critical Task?", "unique_field_name": "critical_taskQ", "pick_list": "Usability - Critical Task Yes/No" },
+          "dev":  { "label": "Critical Task?", "unique_field_name": "critical_task", "pick_list": "Risk Management - Yes/No" },
+          "changes": ["unique_field_name", "pick_list"]
+        },
+        "partsassemblies": {
+          "prod": { "label": "Parts/Assemblies", "unique_field_name": "partsassemblies", "field_type": "Multi Select", "pick_list": "Parts/Assemblies" },
+          "dev":  { "label": "Associated Component(s)", "unique_field_name": "associated_component", "field_type": "Text Box" },
+          "changes": ["unique_field_name", "label", "field_type", "pick_list_removed"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "148": {
+      "prod": { "id": 148, "key": "MRS", "name": "User Need" },
+      "dev":  { "id": 148, "key": "MRS", "name": "User Need [UN]" },
+      "id_changed": false,
+      "key_changed": false,
+      "notes": "Used by User Needs Export. Several field and pick list differences.",
+      "field_map": {
+        "user": {
+          "prod": { "label": "User", "unique_field_name": "user", "field_type": "Multi Select", "pick_list": "User Groups" },
+          "dev":  { "label": "User", "unique_field_name": "user", "field_type": "Multi Select", "pick_list": "User Pick List" },
+          "changes": ["pick_list"]
+        },
+        "validation_methods": {
+          "prod": { "unique_field_name": "validation_methods", "pick_list": "Validation Methods" },
+          "dev":  { "unique_field_name": "validation_methods", "pick_list": "SPR Validation Methods" },
+          "changes": ["pick_list"]
+        },
+        "workflow_status": {
+          "prod": { "unique_field_name": "workflow_status", "pick_list": "SPR - VendorWorkflow Status" },
+          "dev":  { "unique_field_name": "workflow_status", "pick_list": "SPR-VendorWorkflow Status" },
+          "changes": ["pick_list_minor_naming"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "notes", "label": "Notes" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "requirement_type", "label": "Requirement Type", "pick_list": "SPR Requirement Type" },
+        { "unique_field_name": "disposition", "label": "Disposition", "pick_list": "SPR Disposition" },
+        { "unique_field_name": "stakeholders", "label": "Stakeholders", "pick_list": "SPR Stakeholders" }
+      ]
+    },
+
+    "142": {
+      "prod": { "id": 142, "key": "VAP", "name": "Validation" },
+      "dev":  { "id": 142, "key": "VAL", "name": "Validation [VAP]" },
+      "id_changed": false,
+      "key_changed": true,
+      "notes": "Key changed VAP → VAL.",
+      "field_map": {
+        "description": {
+          "prod": { "label": "Validation Description", "unique_field_name": "description" },
+          "dev":  { "label": "Description", "unique_field_name": "description" },
+          "changes": ["label"]
+        }
+      },
+      "prod_only_fields": [
+        { "unique_field_name": "validation_method", "label": "Validation Method", "pick_list": "Validation Methods" }
+      ],
+      "dev_only_fields": [
+        { "unique_field_name": "assignedTo", "label": "Assigned", "notes": "active in DEV, deprecated in PROD" }
+      ]
+    },
+
+    "184": {
+      "prod": { "id": 184, "key": "VAR", "name": "Validation Report" },
+      "dev":  { "id": 185, "key": "VAR", "name": "Validation Report" },
+      "id_changed": true,
+      "key_changed": false,
+      "notes": "ID SWAPPED with Verification Report between environments. PROD 184=Validation Report, DEV 185=Validation Report.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    },
+
+    "159": {
+      "prod": { "id": 159, "key": "VEP", "name": "Verification" },
+      "dev":  { "id": 159, "key": "VER", "name": "Verification [VEP]" },
+      "id_changed": false,
+      "key_changed": true,
+      "notes": "Key changed VEP → VER.",
+      "field_map": {
+        "name": {
+          "prod": { "label": "Name", "unique_field_name": "name" },
+          "dev":  { "label": "Test Element Name", "unique_field_name": "name" },
+          "changes": ["label"]
+        },
+        "standards_driven_verification": {
+          "prod": { "unique_field_name": "standards_driven_verification" },
+          "dev":  { "unique_field_name": "standards_driven" },
+          "changes": ["unique_field_name"]
+        },
+        "verification_method": {
+          "prod": { "unique_field_name": "verification_method", "pick_list": "Verification Method" },
+          "dev":  { "unique_field_name": "verification_method", "pick_list": "Medical Device Framework - Verification Method" },
+          "changes": ["pick_list"]
+        },
+        "verification_status": {
+          "prod": { "unique_field_name": "verification_status", "pick_list": "Test Run Workflow Status" },
+          "dev":  { "unique_field_name": "verification_status", "pick_list": "Medical Device Framework - Test Run Workflow Status" },
+          "changes": ["pick_list"]
+        }
+      },
+      "prod_only_fields": [],
+      "dev_only_fields": [
+        { "unique_field_name": "assignedTo", "label": "Assigned", "notes": "active in DEV, deprecated in PROD" },
+        { "unique_field_name": "release", "label": "Release", "notes": "active in DEV, deprecated in PROD" }
+      ]
+    },
+
+    "185": {
+      "prod": { "id": 185, "key": "VER", "name": "Verification Report" },
+      "dev":  { "id": 184, "key": "VERR", "name": "Verification Report" },
+      "id_changed": true,
+      "key_changed": true,
+      "notes": "ID AND Key changed. PROD 185=Verification Report (VER), DEV 184=Verification Report (VERR). IDs swapped with Validation Report.",
+      "field_map": {},
+      "prod_only_fields": [],
+      "dev_only_fields": []
+    }
+  },
+
+  "dev_only_item_types": [
+    { "id": 134, "key": "DEFECT", "name": "Defect", "notes": "Exists only in DEV environment." },
+    { "id": 174, "key": "SUB_DS", "name": "Subsystem Design Specification", "notes": "Exists only in DEV environment." },
+    { "id": 173, "key": "SUB_VEP", "name": "Subsystem Verification", "notes": "Exists only in DEV environment." }
+  ],
+
+  "vm_file_impact_analysis": {
+    "Risk Export.vm": {
+      "item_types_used": [180, 177, 158, 182],
+      "changes_needed": [
+        "Type 180 (Fault/Failure): field 'partassembly_applicable' → 'partcomponent_applicable' (also changed from Multi Select to Text Box)",
+        "Type 180: field 'risk_control_comments' does NOT exist in DEV — must remove or skip",
+        "Type 180: field 'max_risk_analysis_postrisk_control' → 'max_risk_analysis_postmitigation'",
+        "Type 180: field 'residual_risk_acceptable' does NOT exist in DEV — must remove",
+        "Type 180: field 'benefitrisk_analysis' does NOT exist in DEV — must remove",
+        "Type 180: field 'analysis_of_risk_controls__new_or_exacerbated_risk' — check if referenced, deprecated in PROD",
+        "Type 158 (Harm): pick list names changed (Risk Management → SPR Risk Management prefixes)",
+        "Type 182 (Risk Control): field 'analysis_of_risk_control' → 'riskbenefit_analysis'",
+        "All pick list value comparisons may differ if pick list VALUES (not just names) changed between environments"
+      ],
+      "complexity": "HIGH"
+    },
+    "URRA Export.vm": {
+      "item_types_used": [180, 177, 154, 158, 176, 182],
+      "changes_needed": [
+        "All Type 180 changes from Risk Export apply here",
+        "Type 154 (Use Error): field 'user_groups' → 'user' (Multi Select → Pick List, different pick list)",
+        "Type 154: fields 'comments', 'analysis_of_risk_controls__new_or_exacerbated_risk', 'max_risk_analysis_pre_risk_control', 'max_risk_analysis_post_risk_control', 'residual_risk_acceptable', 'benefitrisk_analysis', 'workflow_status' do NOT exist in DEV",
+        "Type 154: field 'risk_control_description' deprecated in PROD but referenced — check DEV status",
+        "Type 176 (Use Tasks): field 'critical_taskQ' → 'critical_task'",
+        "Type 182 (Risk Control): field 'analysis_of_risk_control' → 'riskbenefit_analysis'"
+      ],
+      "complexity": "HIGH"
+    },
+    "Use Task Export.vm": {
+      "item_types_used": [32, 33, 176],
+      "changes_needed": [
+        "Type 176: field 'user_groups' → 'user_group' (Multi Select → Text Box, pick list removed)",
+        "Type 176: field 'use_environments' → 'use_environment' (Multi Select → Text Box, pick list removed)",
+        "Type 176: field 'partsassemblies' → 'associated_component' (Multi Select → Text Box, pick list removed)",
+        "Type 176: rendering logic for Multi Select fields must change to handle Text Box (plain text) instead"
+      ],
+      "complexity": "MEDIUM"
+    },
+    "DIR Export.vm": {
+      "item_types_used": [140, 138, 148, 150, 166, 167],
+      "changes_needed": [
+        "validChildItemTypes IDs updated: PROD [149,150,148,138,166,167] → DEV [140,138,148,150,166,167] (System Req 149→140, Subsystem Req 150→138, Component Req 138→150)"
+      ],
+      "complexity": "LOW"
+    },
+    "User Needs Export.vm": {
+      "item_types_used": [140, 150, 148, 138],
+      "changes_needed": [
+        "validChildItemTypes IDs updated: PROD [149,150,148,138] → DEV [140,150,148,138] (System Req 149→140, Subsystem Req 150→138, Component Req 138→150)"
+      ],
+      "complexity": "LOW"
+    }
+  },
+
+  "id_swap_warnings": [
+    "IDs 138 and 150 are SWAPPED: PROD 138=Component Requirement, PROD 150=Subsystem Requirement. DEV 150=Component Requirement, DEV 138=Subsystem Requirement.",
+    "IDs 184 and 185 are SWAPPED: PROD 184=Validation Report, PROD 185=Verification Report. DEV 185=Validation Report, DEV 184=Verification Report."
+  ]
+}
