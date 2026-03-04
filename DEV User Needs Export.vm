@@ -5,7 +5,7 @@ Content-Type: multipart/related; boundary="----=_NextPart_01DA8992.E7786AB0"
 
 #########################################################################################################################
 ##======================================================================================================================
-## OUTLINE
+## OUTLINE  
 ## [user directions to modify in brackets]
 ##======================================================================================================================
 ##
@@ -219,7 +219,7 @@ Content-Type: multipart/related; boundary="----=_NextPart_01DA8992.E7786AB0"
 ## General Styles:
 ##----------------
 #set( $headingColor = "black")
-#set( $tableHeaderBgColor = "#F2F2F2" )
+#set( $tableHeaderBgColor = "#b4c6e7" )
 #set( $tableBorderColor = "#7F7F7F" )
 ## ======================================================================================================================
 #########################################################################################################################
@@ -3006,7 +3006,7 @@ td.emphasis
         #end
         
           #if ($docTypeid == 32)  ## Only processes Folders
-            #set ($validChildItemTypes = [149, 150, 148, 138, 166, 167]) ## Populates childItems Array with only DIRs (149), SUBDIRs (150), MRS's (148), COMPDIRs (138), SRS's (166), and SDS's (167)
+            #set ($validChildItemTypes = [140, 150, 148, 138]) ## Populates childItems Array with only SRs (140), DSs (150), MRS's (148), and SUBSRs (138)
             #set ($childItems = [])
 
             #if ( $baselineMode )
@@ -3028,27 +3028,27 @@ td.emphasis
             #if ($childItems.size() > 0)
               <table>             
                 <thead>
-                  <tr class="TableHeader" style="width: 100%;">
-                    <th class="TableCell" style="border: 1px solid black; border-bottom: 2px solid black; width: 15%; text-align: center; padding: 3pt;">ID</th>
-                    <th class="TableCell" style="border: 1px solid black; border-bottom: 2px solid black; width: 50%; text-align: center; padding: 3pt;">Requirement</th>
-                    <th class="TableCell" style="border: 1px solid black; border-bottom: 2px solid black; width: 35%; text-align: center; padding: 3pt;">Rationale</th>
+                  <tr class="TableHeader" style="width: 100%; font-weight: bold;">
+                    <th class="TableCell" style="border: 1px solid black; width: 13%; text-align: center; padding: 3pt;">ID</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 17%; text-align: left; padding: 3pt;">Name</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 25%; text-align: left; padding: 3pt;">User Need</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 35%; text-align: left; padding: 3pt;">Rationale</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 10%; text-align: left; padding: 3pt;">User</th>
                   </tr>
                 </thead>
                 <tbody>
                   #foreach ($childItem in $childItems) ## Intializes $childItem Variable (Any function using $childItem must be put in this loop)
-                  #if ($childItem.documentType.id == 166) ## SRS uses "comments" field for rationale
-                  #set ($rationale = $velocityReportUtil.getValueForField($childItem, "comments", $dateFormat))
-                  #else
                   #set ($rationale = $velocityReportUtil.getValueForField($childItem, "rationale", $dateFormat))
-                  #end
-                  #set ($descChild = "#formatRichText ($childItem.description)") 
-                  #set ($rationaleRich = "#formatRichText ($rationale)") 
+                  #set ($user = $velocityReportUtil.getValueForField($childItem, "user", $dateFormat))
+                  #set ($descChild = "#formatRichText ($childItem.description)")
+                  #set ($rationaleRich = "#formatRichText ($rationale)")
+                  #set ($userRich = "#formatRichText ($user)")
                     <tr class="TableCell">
                           <td class="TableCell" style="padding: 3pt text-align: center;">$!childItem.documentKey</td>
-                          <td class="TableCell">
-                          <div style="color: #204A7E; font-weight: bold; padding: 3pt;">$!childItem.name</div>
-                          <div style="padding: 3pt;">$!descChild</div></td>
-                          <td class="TableCell" style="padding: 3pt;">$rationaleRich</td>
+                          <td class="TableCell">$!childItem.Name</td>
+                          <td class="TableCell">$!descChild</td>
+                          <td class="TableCell">$rationaleRich</td>
+                          <td class="TableCell">$userRich</td>
                     </tr>
                   #end
                 </tbody>

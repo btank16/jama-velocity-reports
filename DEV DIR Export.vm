@@ -3006,7 +3006,7 @@ td.emphasis
         #end
         
           #if ($docTypeid == 32)  ## Only processes Folders
-            #set ($validChildItemTypes = [149, 150, 148, 138, 166, 167]) ## Populates childItems Array with only DIRs (149), SUBDIRs (150), MRS's (148), COMPDIRs (138), SRS's (166), and SDS's (167)
+            #set ($validChildItemTypes = [140, 138, 148, 150, 166, 167]) ## Populates childItems Array with only SRs (140), SUBSRs (138), MRS's (148), DSs (150), SRS's (166), and SDS's (167)
             #set ($childItems = [])
 
             #if ( $baselineMode )

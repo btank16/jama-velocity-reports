@@ -3030,33 +3030,25 @@ td.emphasis
                 <thead>
                   <tr class="TableHeader" style="width: 100%; font-weight: bold;">
                     <th class="TableCell" style="border: 1px solid black; width: 13%; text-align: center; padding: 3pt;">ID</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 15%; text-align: left; padding: 3pt;">Name</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 20%; text-align: left; padding: 3pt;">User Need</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 28%; text-align: left; padding: 3pt;">Rationale</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 8%; text-align: left; padding: 3pt;">User</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 6%; text-align: left; padding: 3pt;">Type</th>
-                    <th class="TableCell" style="border: 1px solid black; width: 10%; text-align: left; padding: 3pt;">Status</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 17%; text-align: left; padding: 3pt;">Name</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 25%; text-align: left; padding: 3pt;">User Need</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 35%; text-align: left; padding: 3pt;">Rationale</th>
+                    <th class="TableCell" style="border: 1px solid black; width: 10%; text-align: left; padding: 3pt;">User</th>
                   </tr>
                 </thead>
                 <tbody>
                   #foreach ($childItem in $childItems) ## Intializes $childItem Variable (Any function using $childItem must be put in this loop)
                   #set ($rationale = $velocityReportUtil.getValueForField($childItem, "rationale", $dateFormat))
                   #set ($user = $velocityReportUtil.getValueForField($childItem, "user", $dateFormat))
-                  #set ($type = $velocityReportUtil.getValueForField($childItem, "requirement_type", $dateFormat))
-                  #set ($status = $velocityReportUtil.getValueForField($childItem, "disposition", $dateFormat))
-                  #set ($descChild = "#formatRichText ($childItem.description)") 
-                  #set ($rationaleRich = "#formatRichText ($rationale)") 
-                  #set ($userRich = "#formatRichText ($user)") 
-                  #set ($typeRich = "#formatRichText ($type)") 
-                  #set ($statusRich = "#formatRichText ($status)") 
+                  #set ($descChild = "#formatRichText ($childItem.description)")
+                  #set ($rationaleRich = "#formatRichText ($rationale)")
+                  #set ($userRich = "#formatRichText ($user)")
                     <tr class="TableCell">
                           <td class="TableCell" style="padding: 3pt text-align: center;">$!childItem.documentKey</td>
                           <td class="TableCell">$!childItem.Name</td>
                           <td class="TableCell">$!descChild</td>
                           <td class="TableCell">$rationaleRich</td>
                           <td class="TableCell">$userRich</td>
-                          <td class="TableCell">$typeRich</td>
-                          <td class="TableCell">$statusRich</td>
                     </tr>
                   #end
                 </tbody>

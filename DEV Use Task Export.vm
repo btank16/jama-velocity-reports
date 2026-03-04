@@ -5390,9 +5390,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 			#set ($childPrinted = false)
 			#set ($bottomBorder = 1)
 			#foreach ($childItemL2 in $childItemsL2)
-			#set ($user = $velocityReportUtil.getValueForField($childItemL2, "user_groups", $dateFormat))
-			#set ($environment = $velocityReportUtil.getValueForField($childItemL2, "use_environments", $dateFormat))
-			#set ($component = $velocityReportUtil.getValueForField($childItemL2, "partsassemblies", $dateFormat))
+			#set ($user = $velocityReportUtil.getValueForField($childItemL2, "user_group", $dateFormat))
+			#set ($environment = $velocityReportUtil.getValueForField($childItemL2, "use_environment", $dateFormat))
+			#set ($component = $velocityReportUtil.getValueForField($childItemL2, "associated_component", $dateFormat))
 
 			<tr #if ($isFirst) style="border-top:2pt solid black;"#end style='border-left:2pt solid black; border-right:2pt solid black;'>
 				#if (!$docPrinted)
@@ -5477,9 +5477,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 				#set ($docPrinted = false)
 
 				#foreach ($childItemL1 in $childItemsL1)
-				#set ($user = $velocityReportUtil.getValueForField($childItemL1, "user_groups", $dateFormat))
-				#set ($environment = $velocityReportUtil.getValueForField($childItemL1, "use_environments", $dateFormat))
-				#set ($component = $velocityReportUtil.getValueForField($childItemL1, "partsassemblies", $dateFormat))
+				#set ($user = $velocityReportUtil.getValueForField($childItemL1, "user_group", $dateFormat))
+				#set ($environment = $velocityReportUtil.getValueForField($childItemL1, "use_environment", $dateFormat))
+				#set ($component = $velocityReportUtil.getValueForField($childItemL1, "associated_component", $dateFormat))
 
 				<tr #if ($isFirst) style="border-top:2pt solid black;"#end style='border-left:2pt solid black; border-right:2pt solid black;'>
 					#if (!$docPrinted)

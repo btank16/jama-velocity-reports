@@ -209,13 +209,15 @@ td
   mso-pattern:black none;}
 .xl66
 	{mso-style-parent:style0;
-	text-align:left;
+	font-size:12.0pt;
+	font-weight:700;
+	text-align:center;
 	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid windowtext;
-	border-left:none;
-	background:#BFBFBF;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	background:#D9D9D9;
 	mso-pattern:black none;
 	white-space:normal;}
 .xl67
@@ -891,6 +893,23 @@ td
 #end
 ##
 
+#macro( getRiskLevel $occurrence $severity $outputVar )
+  #set($riskMatrix = {
+    "5 - Frequent" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"INT", "5 - Catastrophic":"INT" },
+    "4 - Likely" : { "1 - Negligible":"LOW", "2 - Minor":"MOD", "3 - Serious":"MOD", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+    "3 - Occasional" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"MOD", "5 - Catastrophic":"INT" },
+    "2 - Remote" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"MOD" },
+    "1 - Incredible" : { "1 - Negligible":"LOW", "2 - Minor":"LOW", "3 - Serious":"LOW", "4 - Critical":"LOW", "5 - Catastrophic":"LOW" }
+  })
+
+  #set($riskRow = $riskMatrix.get($occurrence.toString()))
+  #if($riskRow)
+    #set($void = $outputVar.set($riskRow.get($severity.toString())))
+  #else
+    #set($void = $outputVar.set("UNKNOWN"))
+  #end
+#end
+
 
 
 
@@ -945,597 +964,288 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
 
     ## Dynamic Content Rows (Exported Items)
-    #if ($postRisk)
-
-    ## Header Row
-        <table border= 0 cellpadding= 0 cellspacing= 0 width= 2651 style= 'border-collapse:collapse;table-layout:fixed;width:1991pt'>
-          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
-          <col width=120 span=2 style='mso-width-source:userset;mso-width-alt:4388;width:90pt'>
-          <col width=311 style='mso-width-source:userset;mso-width-alt:11373;width:233pt'>
-          <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:95pt'>
-          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
-            <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
-          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:157pt'>
-          <col width=293 style='mso-width-source:userset;mso-width-alt:10715;width:220pt'>
-          <col width=200 style='mso-width-source:userset;mso-width-alt:3803;width:150pt'>
-          <col width=366 style='mso-width-source:userset;mso-width-alt:13385;width:275pt'>
-          <col width=121 style='mso-width-source:userset;mso-width-alt:4425;width:91pt'>
-          <col width=103 style='mso-width-source:userset;mso-width-alt:3766;width:77pt'>
-          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
-          #if ($riskCondition)
-          <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-          #end
-            <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
-          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
-          #if ($legacyId)
-            <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
-          #end
-          #if ($riskCondition)
-            <col width=103 style='mso-width-source:userset;mso-width-alt:11373;width:40pt'>
-          #end
-          #if ($riskControlInterface)
-            <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-            <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-          #end
-          <col width=64 span=3 style='width:48pt'>
-
-          <tr>
-            <td rowspan="3" height="115" width="178" style="height:86.45pt;width:134pt;" align="left" valign="top">
-            <!--[if gte vml 1]>
-            <v:shape style=3D'position:absolute;margin-left:15.75pt;margin-top:12pt;width:104.25pt;height:60.75pt;z-index:1;visibility:visible'>
-                <v:imagedata src=3D"image001.png" o:title="cid:"/>
-              </v:shape><![endif]-->
-            </td>
-            <td colspan=8 class=xl116>Document Name:</td>
-            <td class=xl67>Doc ID & Rev</td>
-          </tr>
-          <tr>
-            <td colspan=8 class=xl119>---</td>
-            <td class=xl73>&#35;&#35;&#35;&#35;&#35;-FME-&#35;&#35;&#91;&#35;&#35;&#93;</td>
-          </tr>
-          <tr>
-            <td colspan= 8 class=xl122>Business Confidential</td>
-            <td class= xl68></td>
-          </tr>
-          <tr></tr>
-          <tr><td height=37 class=xl84 style='height:27.75pt;'>Overview</td></tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-           <td height=31 class=xl88 colspan=2 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Product Name &amp; Part Number(s): -----</td>
-           <td></td>
-          </tr>
-          <tr></tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-            <td height=31 class=xl88 colspan=4 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>
-            Document(s) Defining the Construction &amp; Operation of unit for this Analysis
-            <span style='mso-spacerun:yes'></span>
-            </td>
-            <td></td>
-          </tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-          <td height=31 class=xl94 colspan=3 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>The Risk Analysis was done per SPR-WI-&#35;&#35;&#35;&#35;&#35;</td>
-          <td></td>
-          </tr>
-          <tr></tr>
-          <tr><td height=38 class=xl84 style='height:28.5pt'>Notes</td></tr>
-          <tr><td height=38 class=xl98 style='height:28.5pt'>1.<span style='mso-spacerun:yes;'></span>----</td></tr>
-          <tr></tr>
-          <tr class=xl72 height=48 style='height:36.0pt;'>
-            <td height=48 class=xl107 colspan=5 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Design Failure Modes &amp; Effects Analysis (dFMEA)</td>
-            <td></td>
-          </tr>
-          <tr height=61 style='height:45.75pt'>
-            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
-            <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
-            <td class=xl66 width=120 style='width:90pt;'>Part/Assembly Applicable</td>
-            <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
-            <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
-                <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
-            <td class=xl66 width=209 style='width:157pt;'>Scoring Source/Comments</td>
-            <td class=xl66 width=90 style='width:68pt;'>Hazardous Situation ID</td>
-            <td class=xl66 width=293 style='width:220pt;'>Hazardous Situation</td>
-            <td class=xl66 width=104 style='width:78pt;'>Harm ID</td>
-            <td class=xl66 width=366 style='width:275pt;'>Harm</td>
-            <td class=xl66 width=121 style='width:91pt;'>Severity Of Harm</td>
-            <td class=xl66 width=103 style='width:77pt;'>Initial Risk Evaluation</td>
-            <td class=xl66 width=201 style='width:151pt;'>Comments</td>
-            #if ($riskCondition)
-            <td class=xl66 width=201 style='width:151pt;'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
-            #end
-                <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Post Risk Control)</td>
-            <td class=xl66 width=103 style='width:77pt;'>Final Risk Evaluation</td>
-            #if ($legacyId)
-             <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
-            #end
-            #if ($riskCondition)
-             <td class=xl66 width=100 style='width:40pt;'>Risk Control(s)</td>
-            #end
-            #if ($riskControlInterface)
-             <td class=xl66 width=301 style='width:280pt;'>Risk Control(s)</td>
-             <td class=xl66 width=301 style='width:280pt;'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
-            #end
-            <td colspan=3 style='mso-ignore:colspan;'></td>
-          </tr>
-
-
-           #foreach ($vDoc in $documentList)
-            #set ( $doc = $vDoc.document )
-            #set ( $docTypeid = $doc.documentType.id )
-            #set ($globalHarmIndex = 0)
-                #getRelationships ($doc, true)
-                #set ($dnRels = $returnRels)
-                
-              #if ($docTypeid == 180)
-                #set ($totalHarms = 0)
-                #set ($hazardHarmCounts = {})
-                #foreach ($dnRel in $dnRels)
-                  #set ($hazardousDoc = $dnRel.toDocument)
-                  #set ($hazardousDocId = $hazardousDoc.documentType.id)
-                #if ($hazardousDocId == 177)
-                  #getRelationships ($hazardousDoc, true)
-                  #set ($harmRels = $returnRels)
-                  #set ($harmCount = 0)
-                  #if ($harmRels && $harmRels.size() > 0)
-                    #foreach ($hRel in $harmRels)
-                      #if ($hRel.toDocument.documentType.id == 158)
-                        #set ($harmCount = $harmCount + 1)
-                      #end
-                    #end
-                  #end
-                  #if ($harmCount == 0)
-                    #set ($harmCount = 1)
-                  #end
-                  #set ($totalHarms = $totalHarms + $harmCount)
-                  #set ($void = $hazardHarmCounts.put($hazardousDoc.documentKey, $harmCount))
-                #end
-                #end
-
-                  #set ($dFMEAprinted = false)
-                  #set ($rationalePrinted = false)
-                  #set ($legacyPrinted = false)
-                  #set ($riskPrinted = false)
-                  #set ($riskControlInterfacePrinted = false)
-                  #foreach ($dnRel in $dnRels)
-                    #set ($hazardousDoc = $dnRel.toDocument)
-                    #set ($hazardousDocId = $hazardousDoc.documentType.id)
-                    #getRelationships ($hazardousDoc, true)
-                    #set ($harmRels = $returnRels)
-                    #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
-                    #set ($hazardPrinted = false)
-
-                    #if ($harmRels && $harmRels.size() > 0)
-
-                    #set ($harmIndex = 0)
-
-                      #foreach ($harmRel in $harmRels)
-
-                          ## Reset variables to prevent stale values from prior iterations
-                          #set ($severity = "")
-                          #set ($result = "")
-                          #set ($postResult = "")
-                          #set ($riskEvalStyle = "")
-                          #set ($postRiskEvalStyle = "")
-                          #set ($_when_failure_occurs_phase_or_mode = "")
-                          #set ($occurrence = "")
-                          #set ($postOccurrence = "")
-                          #set ($sourcecomments = "")
-                          #set ($risk_control = "")
-                          #set ($hazards = "")
-                          #set ($partassembly_applicable = "")
-                          #set ($analysisOfRisk = "")
-                          #set ($legacy_id = "")
-
-                          #set ($harmDoc = $harmRel.toDocument)
-                          #set ($harmDocId = $harmDoc.documentType.id)
-                          #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
-                          #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
-                          #set ($postOccurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_post_risk_control", $dateFormat))
-                          #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
-                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
-                          #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
-                          #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
-                          #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat))
-                          #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
-                                #set ($riskRow = $riskMatrix.get($occurrence))
-                                #if ($riskRow)
-                                    #set ($result = $riskRow.get($severity))
-                                        #if ($result == "LOW")
-                                        #set ($riskEvalStyle = "background-color:#00CC66;") ## green
-                                        #elseif ($result == "MOD")
-                                        #set ($riskEvalStyle = "background-color:#FFF800;") ## yellow
-                                        #elseif ($result == "INT")
-                                        #set ($riskEvalStyle = "background-color:#FF0000;") ## red
-                                        #end
-                                #end
-                                #set ($postRiskRow = $riskMatrix.get($postOccurrence))
-                                #if ($postRiskRow)
-                                    #set ($postResult = $postRiskRow.get($severity))
-                                        #if ($postResult == "LOW")
-                                        #set ($postRiskEvalStyle = "background-color:#00CC66;") ## green
-                                        #elseif ($postResult == "MOD")
-                                        #set ($postRiskEvalStyle = "background-color:#FFF800;") ## yellow
-                                        #elseif ($postResult == "INT")
-                                        #set ($postRiskEvalStyle = "background-color:#FF0000;") ## red
-                                        #end
-                                #end
-                      #if ($harmDocId == 158 && $hazardousDocId == 177)
-                      #set ($harmIndex = $harmIndex + 1)
-                      #set ($globalHarmIndex = $globalHarmIndex + 1)
-                        #set ($borderStyle = "")
-                          #if ($harmIndex == $hazardHarmCount)
-                            #set ($borderStyle = "border-bottom:1pt solid black;")
-                          #end
-                          #set ($borderStyleHarm = "")
-                          #if ($globalHarmIndex == $totalHarms)
-                            #set ($borderStyleHarm = "border-bottom:1pt solid black;")
-                          #end 
-                        <tr>
-                          #if (!$dFMEAprinted)
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
-                            #set ($dFMEAprinted = true)
-                          #end
-
-                        #if (!$hazardPrinted)
-                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.documentKey</td>
-                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">
-                            #if ($legacyHazard)
-                              $!hazardousDoc.name
-                            #else
-                              #formatRichTextCell($hazardousDoc.description)
-                            #end
-                          </td>
-                          #set ($hazardPrinted = true)
-                        #end
-
-                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.documentKey</td>
-                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.name</td>
-                          <td class="xl113" style = "$borderStyleHarm">$!severity</td>
-                          <td class="xl113" style="$riskEvalStyle $borderStyleHarm">$!result</td>
-
-
-                          #if (!$rationalePrinted && $docTypeid == 180)
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!risk_control</td>
-                            #if ($riskCondition)
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!analysisOfRisk</td>
-                            #end
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!postOccurrence</td>
-                            #set ($rationalePrinted = true)
-                          #end
-
-                          <td class="xl113" style="$postRiskEvalStyle $borderStyleHarm">$!postResult</td>
-
-                          #if ($legacyId)
-                            #if (!$legacyPrinted)
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!legacy_id</td>
-                                #set ($legacyPrinted = true)
-                            #end
-                          #end
-                          #if ($riskCondition)
-                            #if (!$riskPrinted)
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black; text-align: center;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($linkedDoc = $dnRel.toDocument)
-                                        #if ($linkedDoc.documentType.id != 177)
-                                            <div>$!linkedDoc.documentKey</div>
-                                        #end
-                                    #end
-                                </td>
-                                #set ($riskPrinted = true)
-                            #end
-                          #end
-                          #if ($riskControlInterface)
-                            #if (!$riskControlInterfacePrinted)
-                                <td class="xl113" rowspan="$totalHarms" style="border-bottom:1pt solid black;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($rcDoc = $dnRel.toDocument)
-                                        #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcDescription = $rcDoc.description)
-                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
-                                        #end
-                                    #end
-                                </td>
-                                <td class="xl113" rowspan="$totalHarms" style="border-bottom:1pt solid black;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($rcDoc = $dnRel.toDocument)
-                                        #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "analysis_of_risk_control", $dateFormat))
-                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
-                                        #end
-                                    #end
-                                </td>
-                                #set ($riskControlInterfacePrinted = true)
-                            #end
-                          #end
-
-                        </tr>
-                      #end
-                      #end
-                    #end
-                  #end
-              #end
-        #end
-#else
-    ## Header Row
-        <table border= 0 cellpadding= 0 cellspacing= 0 width= 2651 style= 'border-collapse:collapse;table-layout:fixed;width:1991pt'>
-          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
-          <col width=120 span=2 style='mso-width-source:userset;mso-width-alt:4388;width:90pt'>
-          <col width=311 style='mso-width-source:userset;mso-width-alt:11373;width:233pt'>
-          <col width=126 style='mso-width-source:userset;mso-width-alt:4608;width:95pt'>
-          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
-            <col width=90 style='mso-width-source:userset;mso-width-alt:3291;width=:68pt'>
+  
+        <table border=0 cellpadding=0 cellspacing=0 width=2590 style='border-collapse:collapse;table-layout:fixed;width:1943pt'>
+          <col width=131 style='mso-width-source:userset;mso-width-alt:4790;width:98pt'>
+          <col width=184 style='mso-width-source:userset;mso-width-alt:6729;width:138pt'>
+          <col width=88 style='mso-width-source:userset;mso-width-alt:3218;width:66pt'>
+          <col width=131 style='mso-width-source:userset;mso-width-alt:4790;width:98pt'>
           <col width=209 style='mso-width-source:userset;mso-width-alt:7643;width:157pt'>
-          <col width=293 style='mso-width-source:userset;mso-width-alt:10715;width:220pt'>
-          <col width=200 style='mso-width-source:userset;mso-width-alt:3803;width:150pt'>
-          <col width=366 style='mso-width-source:userset;mso-width-alt:13385;width:275pt'>
-          <col width=121 style='mso-width-source:userset;mso-width-alt:4425;width:91pt'>
-          <col width=103 style='mso-width-source:userset;mso-width-alt:3766;width:77pt'>
-          <col width=201 style='mso-width-source:userset;mso-width-alt:7350;width:151pt'>
-          #if ($legacyId)
-            <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
-          #end
-          #if ($riskCondition)
-            <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-            <col width=103 style='mso-width-source:userset;mso-width-alt:11373;width:40pt'>
-          #end
-          #if ($riskControlInterface)
-            <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-            <col width=301 style='mso-width-source:userset;mso-width-alt:7350;width:280pt'>
-          #end
-          <col width=64 span=3 style='width:48pt'>
+          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          <col width=295 style='mso-width-source:userset;mso-width-alt:10788;width:221pt'>
+          <col width=295 style='mso-width-source:userset;mso-width-alt:10788;width:221pt'>
+          <col width=138 style='mso-width-source:userset;mso-width-alt:5046;width:104pt'>
+          <col width=127 style='mso-width-source:userset;mso-width-alt:4644;width:95pt'>
+          <col width=163 style='mso-width-source:userset;mso-width-alt:5961;width:122pt'>
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+          <col width=117 style='mso-width-source:userset;mso-width-alt:4278;width:88pt'>
+          <col width=76 style='mso-width-source:userset;mso-width-alt:2779;width:57pt'>
+        #if ($postRisk)
+            <col width=124 style='mso-width-source:userset;mso-width-alt:4534;width:93pt'>
+            <col width=78 style='mso-width-source:userset;mso-width-alt:2852;width:59pt'>
+        #end
+        #if ($riskCondition)
+          <col width=259 style='mso-width-source:userset;mso-width-alt:9472;width:194pt'>
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+          <col width=175 style='mso-width-source:userset;mso-width-alt:6400;width:131pt'>
+        #end
+        #if ($riskControlInterface)
+          <col width=301 style='mso-width-source:userset;mso-width-alt:11008;width:280pt'>
+          <col width=301 style='mso-width-source:userset;mso-width-alt:11008;width:280pt'>
+        #end
+        #if ($legacyId)
+          <col width=178 style='mso-width-source:userset;mso-width-alt:6509;width:134pt'>
+        #end
 
           ## Header Row
-          <tr>
-            <td rowspan="3" height="115" width="178" style="height:86.45pt;width:134pt;" align="left" valign="top">
-            <!--[if gte vml 1]>
-            <v:shape style=3D'position:absolute;margin-left:15.75pt;margin-top:12pt;width:104.25pt;height:60.75pt;z-index:1;visibility:visible'>
-                <v:imagedata src=3D"image001.png" o:title="cid:"/>
-              </v:shape><![endif]-->
-            </td>
-            <td colspan=8 class=xl116>Document Name:</td>
-            <td class=xl67>Doc ID & Rev</td>
-          </tr>
-          <tr>
-            <td colspan=8 class=xl119>---</td>
-            <td class=xl73>&#35;&#35;&#35;&#35;&#35;-FME-&#35;&#35;&#91;&#35;&#35;&#93;</td>
-          </tr>
-          <tr>
-            <td colspan= 8 class=xl122>Business Confidential</td>
-            <td class= xl68></td>
-          </tr>
           <tr></tr>
-          <tr><td height=37 class=xl84 style='height:27.75pt;'>Overview</td></tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-           <td height=31 class=xl88 colspan=2 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Product Name &amp; Part Number(s): -----</td>
-           <td></td>
-          </tr>
           <tr></tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-            <td height=31 class=xl88 colspan=4 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>
-            Document(s) Defining the Construction &amp; Operation of unit for this Analysis
-            <span style='mso-spacerun:yes'></span>
-            </td>
-            <td></td>
-          </tr>
-          <tr class=xl72 height=31 style='mso-height-source:userset;height:23.45pt;'>
-          <td height=31 class=xl94 colspan=3 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>The Risk Analysis was done per SPR-WI-&#35;&#35;&#35;&#35;&#35;</td>
-          <td></td>
-          </tr>
           <tr></tr>
-          <tr><td height=38 class=xl84 style='height:28.5pt'>Notes</td></tr>
-          <tr><td height=38 class=xl98 style='height:28.5pt'>1.<span style='mso-spacerun:yes;'></span>----</td></tr>
-          <tr></tr>
-          <tr class=xl72 height=48 style='height:36.0pt;'>
-            <td height=48 class=xl107 colspan=5 style='mso-style-parent:style0; mso-number-format:"\@"; white-space:nowrap;'>Design Failure Modes &amp; Effects Analysis (dFMEA)</td>
-            <td></td>
-          </tr>
-          <tr height=61 style='height:45.75pt'>
-            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>dFMEA ID</td>
-            <td class=xl66 width=120 style='width:90pt;'>Hazard(s)</td>
-            <td class=xl66 width=120 style='width:90pt;'>Part/Assembly Applicable</td>
-            <td class=xl66 width=311 style='width:233pt;'>Fault or Failure</td>
-            <td class=xl66 width=126 style='width:95pt;'>When Failure Occurs (Phase or Mode)</td>
-                <td class=xl66 width=117 style='width:88pt;'>Occurrence Score (Pre Risk Control)</td>
-            <td class=xl66 width=209 style='width:157pt;'>Scoring Source/Comments</td>
-            <td class=xl66 width=90 style='width:68pt;'>Hazardous Situation ID</td>
-            <td class=xl66 width=293 style='width:220pt;'>Hazardous Situation</td>
-            <td class=xl66 width=104 style='width:78pt;'>Harm ID</td>
-            <td class=xl66 width=366 style='width:275pt;'>Harm</td>
-            <td class=xl66 width=121 style='width:91pt;'>Severity Of Harm</td>
-            <td class=xl66 width=103 style='width:77pt;'>Initial Risk Evaluation</td>
-            <td class=xl66 width=201 style='width:151pt;'>Comments</td>
-            #if ($legacyId)
-             <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
-            #end
-            #if ($riskCondition)
-            <td class=xl66 width=201 style='width:151pt;'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
-             <td class=xl66 width=100 style='width:40pt;'>Risk Control(s)</td>
-            #end
-            #if ($riskControlInterface)
-             <td class=xl66 width=301 style='width:280pt;'>Risk Control(s)</td>
-             <td class=xl66 width=301 style='width:280pt;'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
-            #end
-            <td colspan=3 style='mso-ignore:colspan;'></td>
+          <tr height=97 style='mso-height-source:userset;height:73.15pt;border-bottom:1pt solid black;'>
+            <td height=97 class=xl66 width=131 style='height:73.15pt;width:98pt'>Use Task ID</td>
+            <td class=xl66 width=184 style='border-left:none;width:138pt'>Use Task Description</td>
+            <td class=xl66 width=88 style='border-left:none;width:66pt'>Critical Task?</td>
+            <td class=xl66 width=131 style='border-left:none;width:98pt'>Use Error ID</td>
+            <td class=xl66 width=209 style='border-left:none;width:157pt'>Use Error Description</td>
+                <td class=xl66 width=117 style='border-left:none;width:88pt'>Occurrence Score (Pre Risk Control)</td>
+            <td class=xl66 width=295 style='border-left:none;width:221pt'>Scoring Source/Comments</td>
+            <td class=xl66 width=295 style='border-left:none;width:221pt'>Comments</td>
+            <td class=xl66 width=138 style='border-left:none;width:104pt'>Hazardous Situation ID</td>
+            <td class=xl66 width=127 style='border-left:none;width:95pt'>Hazardous Situation Description</td>
+            <td class=xl66 width=163 style='border-left:none;width:122pt'>Harm ID</td>
+            <td class=xl66 width=178 style='border-left:none;width:134pt'>Harm Description</td>
+            <td class=xl66 width=117 style='border-left:none;width:88pt'>Severity Of Harm</td>
+            <td class=xl66 width=74 style='border-left:none;width:60pt'>Initial Risk Evaluation</td>
+          #if ($postRisk)
+                <td class=xl66 width=124 style='border-left:none;width:93pt'>Occurrence Score (Post Risk Control)</td>
+              <td class=xl66 width=78 style='border-left:none;width:59pt'>Final Risk Evaluation</td>
+          #end
+          #if ($riskCondition)
+            <td class=xl66 width=259 style='border-left:none;width:194pt'>Risk Control Description</td>
+            <td class=xl66 width=178 style='border-left:none;width:134pt'>Risk Control(s)</td>
+            <td class=xl66 width=175 style='border-left:none;width:131pt'>Analysis of Risk Controls - New or Exacerbated Risk?</td>
+          #end
+          #if ($riskControlInterface)
+            <td class=xl66 width=301 style='border-left:none;width:280pt'>Risk Control(s)</td>
+            <td class=xl66 width=301 style='border-left:none;width:280pt'>Analysis of Risk Controls</td>
+          #end
+          #if ($legacyId)
+            <td height=61 class=xl66 width=178 style='height:45.75pt;width:134pt;'>Legacy ID (if applicable)</td>
+          #end  
           </tr>
 
+                #foreach ($vDoc in $documentList)
+                  #set ($useTaskDoc = $vDoc.document)
+                  #if ($useTaskDoc.documentType.id == 176)
 
-           #foreach ($vDoc in $documentList)
-            #set ( $doc = $vDoc.document )
-            #set ( $docTypeid = $doc.documentType.id )
-            #set ( $globalHarmIndex = 0 )
-                #getRelationships ($doc, true)
-                #set ($dnRels = $returnRels)
-                
-              #if ($docTypeid == 180)
-                #set ($totalHarms = 0)
-                #set ($hazardHarmCounts = {})
-                #foreach ($dnRel in $dnRels)
-                  #set ($hazardousDoc = $dnRel.toDocument)
-                  #set ($hazardousDocId = $hazardousDoc.documentType.id)
-                #if ($hazardousDocId == 177)
-                  #getRelationships ($hazardousDoc, true)
-                  #set ($harmRels = $returnRels)
-                  #set ($harmCount = 0)
-                  #if ($harmRels && $harmRels.size() > 0)
-                    #foreach ($hRel in $harmRels)
-                      #if ($hRel.toDocument.documentType.id == 158)
-                        #set ($harmCount = $harmCount + 1)
-                      #end
-                    #end
-                  #end
-                  #if ($harmCount == 0)
-                    #set ($harmCount = 1)
-                  #end
-                  #set ($totalHarms = $totalHarms + $harmCount)
-                  #set ($void = $hazardHarmCounts.put($hazardousDoc.documentKey, $harmCount))
-                #end
-                #end
+                    #set ($useErrorData = [])
+                    #set ($totalHarms = 0)
 
-                  #set ($dFMEAprinted = false)
-                  #set ($rationalePrinted = false)
-                  #foreach ($dnRel in $dnRels)
-                    #set ($hazardousDoc = $dnRel.toDocument)
-                    #set ($hazardousDocId = $hazardousDoc.documentType.id)
-                    #getRelationships ($hazardousDoc, true)
-                    #set ($harmRels = $returnRels)
-                    #set ($hazardHarmCount = $hazardHarmCounts.get($hazardousDoc.documentKey))
-                    #set ($hazardPrinted = false)
+                    #getRelationships ($useTaskDoc, true)
+                    #set ($useErrorRels = $returnRels)
+                  
+                    #foreach ($useErrorRel in $useErrorRels)
+                      #set ($useErrorDoc = $useErrorRel.toDocument)
+                      #if ($useErrorDoc.documentType.id == 154)
 
-                    #if ($harmRels && $harmRels.size() > 0)
+                        #getRelationships ($useErrorDoc, true)
+                        #set ($hazardRels = $returnRels)
+                        #set ($hazardList = [])
+                        #set ($useErrorHarmCount = 0)
 
-                    #set ($harmIndex = 0)
+                        #foreach ($hazardRel in $hazardRels)
+                          #set ($hazardDoc = $hazardRel.toDocument)
+                          #if ($hazardDoc.documentType.id == 177)
 
-                      #foreach ($harmRel in $harmRels)
+                            #getRelationships ($hazardDoc, true)
+                            #set ($harmRels = $returnRels)
+                            #set ($harmList = [])
+                            #set ($harmCount = 0)
 
-                          ## Reset variables to prevent stale values from prior iterations
-                          #set ($severity = "")
-                          #set ($result = "")
-                          #set ($riskEvalStyle = "")
-                          #set ($_when_failure_occurs_phase_or_mode = "")
-                          #set ($occurrence = "")
-                          #set ($sourcecomments = "")
-                          #set ($risk_control = "")
-                          #set ($hazards = "")
-                          #set ($partassembly_applicable = "")
-                          #set ($legacy_id = "")
-                          #set ($analysisOfRisk = "")
-
-                          #set ($harmDoc = $harmRel.toDocument)
-                          #set ($harmDocId = $harmDoc.documentType.id)
-                          #set ($_when_failure_occurs_phase_or_mode  = $velocityReportUtil.getValueForField($doc, "when_failure_occurs_phase_or_mode", $dateFormat))
-                          #set ($occurrence = $velocityReportUtil.getValueForField($doc, "occurrence_score_pre_risk_control", $dateFormat))
-                          #set ($sourcecomments = $velocityReportUtil.getValueForField($doc, "rationale", $dateFormat))
-                          #set ($risk_control = $velocityReportUtil.getValueForField($doc, "risk_control_comments", $dateFormat))
-                          #set ($hazards = $velocityReportUtil.getValueForField($doc, "hazards", $dateFormat))
-                          #set ($partassembly_applicable = $velocityReportUtil.getValueForField($doc, "partassembly_applicable", $dateFormat))
-                          #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
-                          #set ($legacy_id = $velocityReportUtil.getValueForField($doc, "legacy_id_if_applicable", $dateFormat))
-                          #set ($analysisOfRisk = $velocityReportUtil.getValueForField($doc, "analysis_of_risk_controls__new_or_exacerbated_risk", $dateFormat))
-
-                              #set ($riskRow = $riskMatrix.get($occurrence))
-                              #if ($riskRow)
-                                #set ($result = $riskRow.get($severity))
-                                    #if ($result == "LOW")
-                                      #set ($riskEvalStyle = "background-color:#00CC66;") ## green
-                                    #elseif ($result == "MOD")
-                                      #set ($riskEvalStyle = "background-color:#FFF800;") ## yellow
-                                    #elseif ($result == "INT")
-                                      #set ($riskEvalStyle = "background-color:#FF0000;") ## red
-                                    #end
+                            #if ($harmRels && $harmRels.size() > 0)
+                              #foreach ($harmRel in $harmRels)
+                                #set ($harmDoc = $harmRel.toDocument)
+                                #set ($void = $harmList.add($harmDoc))
+                                #set ($harmCount = $harmCount + 1)
                               #end
-                       #if ($harmDocId == 158 && $hazardousDocId == 177)
-                       #set ($harmIndex = $harmIndex + 1)
-                       #set ($globalHarmIndex = $globalHarmIndex + 1)
-                        #set ($borderStyle = "")
-                          #if ($harmIndex == $hazardHarmCount)
-                            #set ($borderStyle = "border-bottom:1pt solid black;")
-                          #end
-                          #set ($borderStyleHarm = "")
-                          #if ($globalHarmIndex == $totalHarms)
-                            #set ($borderStyleHarm = "border-bottom:1pt solid black;")
-                          #end 
-            
-                    
-                        <tr>
-                          #if (!$dFMEAprinted)
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.documentKey</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!hazards</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!partassembly_applicable</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!doc.description</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!_when_failure_occurs_phase_or_mode</td>
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!occurrence</td>
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!sourcecomments</td>
-                            #set ($dFMEAprinted = true)
-                          #end
-
-                        #if (!$hazardPrinted)
-                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">$!hazardousDoc.documentKey</td>
-                          <td class="xl113" rowspan=$hazardHarmCount style = "$borderStyle">
-                            #if ($legacyHazard)
-                              $!hazardousDoc.name
                             #else
-                              #formatRichTextCell($hazardousDoc.description)
+                              ## placeholder if no harms exist
+                              #set ($void = $harmList.add("placeholder"))
+                              #set ($harmCount = $harmCount + 1)
                             #end
-                          </td>
-                          #set ($hazardPrinted = true)
+
+                            #set ($void = $hazardList.add({"hazard": $hazardDoc, "harms": $harmList}))
+                            #set ($useErrorHarmCount = $useErrorHarmCount + $harmCount)
+                          #end
                         #end
 
-                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.documentKey</td>
-                          <td class="xl113" style = "$borderStyleHarm">$!harmDoc.name</td>
-                          <td class="xl113" style = "$borderStyleHarm">$!severity</td>
-                          <td class="xl113" style="$riskEvalStyle $borderStyleHarm">$!result</td>
-
-                          #if (!$rationalePrinted)
-                            <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!risk_control</td>
-                            #if ($legacyId)
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!legacy_id</td>
-                            #end
-                            #if ($riskCondition)
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black;">$!analysisOfRisk</td>
-                                <td class="xl113" rowspan="$totalHarms" style = "border-bottom:1pt solid black; text-align: center;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($linkedDoc = $dnRel.toDocument)
-                                        #if ($linkedDoc.documentType.id != 177)
-                                            <div>$!linkedDoc.documentKey</div>
-                                        #end
-                                    #end
-                                </td>
-                            #end
-                            #if ($riskControlInterface)
-                                <td class="xl113" rowspan="$totalHarms" style="border-bottom:1pt solid black;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($rcDoc = $dnRel.toDocument)
-                                        #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcDescription = $rcDoc.description)
-                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
-                                        #end
-                                    #end
-                                </td>
-                                <td class="xl113" rowspan="$totalHarms" style="border-bottom:1pt solid black;">
-                                    #foreach ($dnRel in $dnRels)
-                                        #set ($rcDoc = $dnRel.toDocument)
-                                        #if ($rcDoc.documentType.id == 182)
-                                            #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "analysis_of_risk_control", $dateFormat))
-                                            <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
-                                        #end
-                                    #end
-                                </td>
-                            #end
-                            #set ($rationalePrinted = true)
-                          #end
-                        </tr>
+                        #set ($void = $useErrorData.add({"useError": $useErrorDoc, "hazards": $hazardList, "harmCount": $useErrorHarmCount}))
+                        #set ($totalHarms = $totalHarms + $useErrorHarmCount)
                       #end
+                    #end
+
+                    ## Print rows
+                    #set ($rationalePrinted = false)
+                    #set ($useTaskPrinted = false)
+                    #set ($legacyPrinted = false)
+                    #set ($riskPrinted = false)
+                    #set ($riskControlInterfacePrinted = false)
+                    #foreach ($ue in $useErrorData)
+                      #set ($ueDoc = $ue.useError)
+                      #set ($useErrorHarmCount = 0)
+                      #foreach ($hz in $ue.hazards)
+                        #set ($useErrorHarmCount = $useErrorHarmCount + $hz.harms.size())
+                      #end
+
+                      #set ($useErrorPrinted = false)
+                      #foreach ($hz in $ue.hazards)
+                        #set ($hzdDoc = $hz.hazard)
+                        #set ($harmList = $hz.harms)
+                        #set ($hazardPrinted = false)
+
+                        #foreach ($harmDoc in $harmList)
+                                    #set ($occurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_pre_risk_control", $dateFormat))
+                                    #set ($postOccurrence = $velocityReportUtil.getValueForField($ueDoc, "occurrence_score_post_risk_control", $dateFormat))
+                                    #set ($sourcecomments = $velocityReportUtil.getValueForField($ueDoc, "scoring_sourcecomments", $dateFormat))
+                                    #set ($comments = "")
+                                    #set ($risk_control = "")
+                                    #set ($analysisOfRisk = "")
+                                    #set ($critical_task = $velocityReportUtil.getValueForField($useTaskDoc, "critical_task", $dateFormat))
+                                    #set ($severity = $velocityReportUtil.getValueForField($harmDoc, "severity_of_harm", $dateFormat))
+                                    #set ($legacy_id = $velocityReportUtil.getValueForField($ueDoc, "legacy_id", $dateFormat))
+                                     
+                          <tr style="border:1pt solid black;">
+
+                            #if (!$useTaskPrinted)
+                              <td rowspan="$totalHarms">$!useTaskDoc.documentKey</td>
+                              <td rowspan="$totalHarms">
+                                #formatRichTextCell ($!useTaskDoc.description)
+                              </td>
+                              <td rowspan="$totalHarms">
+                                #formatRichTextCell ($!critical_task)
+                              </td>
+                              #set ($useTaskPrinted = true)
+                            #end
+
+                            #if (!$useErrorPrinted)
+                              <td rowspan="$useErrorHarmCount">$!ueDoc.documentKey</td>
+                              <td rowspan="$useErrorHarmCount">#formatRichTextCell ($!ueDoc.name)</td>
+                                <td  rowspan="$useErrorHarmCount">$!occurrence</td>
+                              <td rowspan="$useErrorHarmCount">$!sourcecomments</td>
+                              <td rowspan="$useErrorHarmCount">#formatRichTextCell($!comments)</td>
+                              #set ($useErrorPrinted = true)
+                            #end
+
+                            #if (!$hazardPrinted)
+                              <td rowspan="$harmList.size()">$!hzdDoc.documentKey</td>
+                              <td rowspan="$harmList.size()">#formatRichTextCell ($!hzdDoc.name)</td>
+                              #set ($hazardPrinted = true)
+                            #end
+
+                            #if ($harmDoc != "placeholder")
+                              <td>$!harmDoc.documentKey</td>
+                              <td>#formatRichTextCell ($!harmDoc.name)</td>
+                              <td>$!severity</td>
+                            #end
+
+                                #set ($riskRow = $riskMatrix.get($occurrence))
+                                #set ($riskResult = $riskRow.get($severity))
+                                #set ($riskStyle = "")
+                                #if ($riskResult == "LOW")
+                                  #set ($riskStyle = "background-color:#92D050;")
+                                #elseif ($riskResult == "MOD")
+                                  #set ($riskStyle = "background-color:#FFFF00;")
+                                #elseif ($riskResult == "INT")
+                                  #set ($riskStyle = "background-color:#FF0000;")
+                                #end
+                            <td style="$riskStyle">$!riskResult</td>
+
+                            ## Post-Mitigation Risk Eval
+                            #if (!$rationalePrinted)
+                            #if ($postRisk)
+                                <td rowspan="$totalHarms">$!postOccurrence</td>
+                            #end
+                            #end
+
+                        #if ($postRisk)
+                            #set ($postRow = $riskMatrix.get($postOccurrence))
+                            #set ($postResult = $postRow.get($severity))
+                            #set ($postStyle = "")
+                            #if ($postResult == "LOW")
+                              #set ($postStyle = "background-color:#92D050;")
+                            #elseif ($postResult == "MOD")
+                              #set ($postStyle = "background-color:#FFFF00;")
+                            #elseif ($postResult == "INT")
+                              #set ($postStyle = "background-color:#FF0000;")
+                            #end
+                            <td style="$postStyle">$!postResult</td>
+                        #end
+
+                            ## Fetch downstream rels from Use Error for riskCondition and riskControlInterface
+                          #if ($riskCondition || $riskControlInterface)
+                            #if (!$riskPrinted && !$riskControlInterfacePrinted)
+                              #getRelationships ($ueDoc, true)
+                              #set ($dnRels = $returnRels)
+                            #end
+                          #end
+
+                            ## Risk Condition block
+                          #if ($riskCondition)
+                            #if (!$riskPrinted)
+                              <td rowspan="$totalHarms">$!risk_control</td>
+                              <td rowspan="$totalHarms" style="text-align: center;">
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($linkedDoc = $dnRel.toDocument)
+                                  #if ($linkedDoc.documentType.id != 177)
+                                    <div>$!linkedDoc.documentKey</div>
+                                  #end
+                                #end
+                              </td>
+                              <td rowspan="$totalHarms">$!analysisOfRisk</td>
+                              #set ($riskPrinted = true)
+                            #end
+                          #end
+
+                            ## Risk Control Interface block
+                          #if ($riskControlInterface)
+                            #if (!$riskControlInterfacePrinted)
+                              <td rowspan="$totalHarms">
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($rcDoc = $dnRel.toDocument)
+                                  #if ($rcDoc.documentType.id == 182)
+                                    #set ($rcDescription = $rcDoc.description)
+                                    <div>$!rcDoc.documentKey - #formatRichTextCell($rcDescription)</div>
+                                  #end
+                                #end
+                              </td>
+                              <td rowspan="$totalHarms">
+                                #foreach ($dnRel in $dnRels)
+                                  #set ($rcDoc = $dnRel.toDocument)
+                                  #if ($rcDoc.documentType.id == 182)
+                                    #set ($rcAnalysis = $velocityReportUtil.getValueForField($rcDoc, "riskbenefit_analysis", $dateFormat))
+                                    <div>$!rcDoc.documentKey - #formatRichTextCell($rcAnalysis)</div>
+                                  #end
+                                #end
+                              </td>
+                              #set ($riskControlInterfacePrinted = true)
+                            #end
+                          #end
+
+                            #if (!$rationalePrinted)
+                              #set ($rationalePrinted = true)
+                            #end
+                        #if ($legacyId)
+                            #if (!$legacyPrinted)
+                                <td  rowspan="$totalHarms">$!legacy_id</td>
+                                #set ($legacyPrinted = true)
+                            #end
+                        #end
+                          </tr>
+                        #end
                       #end
                     #end
                   #end
-              #end
-        #end
-#end
+                #end
       </table>
     </body>
 </html>
@@ -1568,7 +1278,7 @@ fY+TzXt6k5448bxGUPsUEsAxXRwUmGyMRQ77nBm4pYLCvvxECMsEBp3C0dh4Sa62dyo45RoOUJ3n
 5WFgC7Ea50l5OVYlVHpZWakKCwcrcUA5sePjEzALw5hADLrTQBxI4gCqcf7kxJimmY2HbkS9czJD
 xDZo99AQMdOw9A1Ak0C4h4eHhP0hbqLweaYj0Xxw4rkQqC3ZZ2qchQurpKZmkRQXF6uwUEB5XqKA
 43JmCiH4XAxh3Gd8Yko1THZ2puTpYqGpmxss30j/5jrnlgtLomo00BjHAMPDI3LhwkX58PwF4JEe
-9VJycnJVTVdUlkv1giqpqqzSwaT9T3dwJZrXM4Hvh3SgM2ASiA+yc0xdq713ZuLmBisRyMR/5wRm
+9VJycnJVTVdUlkv1giqpqqzSwaT9TwJZrXM4Hvh3SgM2ASiA+yc0xdq713ZuLmBisRyMR/5wRm
 c1XjRa22ZIldlcI6MjIKQeiH6eyQbpjRgYFhnXi2ixqPJtPDJJ6JJAbr6emG4FyRRYtqpK5uGTRO
 FSRjRj25UNAJPhWkCoyZU8/rik6HcR6Fl4JjQpOXn6vaxtNuH4V5uuXCkthIU/OiHszp02fl/Pnz
 GMwBNR0VlfOxshbKggULpLq6Cius6Jpq1bQI3WMKSVRXcB60kHkhnlq+OdGYfXYiCr6+y0rBLC+n
@@ -1595,11 +1305,11 @@ noangc/Dfo5KRIAs0uha+/7sY7YYe23xceGoMJrskfqn3CyEN0i64NyF83Lk0BEZGhhV1tbTEuw/
 tcwINO7LL78sQzu2yZbbbnNYxRYbNQGxHB2BifFRMNJYoDAr8YPjmKFapA9uPgWiqDBfv0tno6Oj
 U72uOpjJbNz7msLiRtQpC8Qw0KlpjKTf88+c4EzJhEyFgc7xCk5T9c1Ilg/SCdA6MhOVfF8ehhYd
 BffHAZnO4NDgengnTIHBn34jDpIOegT8R3CmRkBjPiknXU+dJF4x8VwqNP2M9zVVQmGe5j2gQTKm
-A6a/IBz8RGUOrmoG2pkJQZ/zmKVt5jgz1pbkPmn4gncE2UZGeV3DGqkGu/v+gSNyCcRdRoLXxPMo
+A6a/IBz8RGUOrmoG2pkJQZ/zmKVt5jgz1pbkPmn4gncE2UZGeVGqkGu/v+gSNyCcRdRoLXxPMo
 QBFM9r539yk5uGvnTkfGmbbmYitDXCoHZB0xSDiSjGXMLGWoiR/E59MIORQDD9KjXLJkcdrGp9Us
 HDSdVh8nFEzkNATFdaY/3Cvne8/I2b5T0jJ0RfomemQsOiqhmZAOfAArMjsjTwqzi2Vh4UJZXrxK
 1lVslGWl9Rhsk1I1cTMgqHRlJaOimObAQvNjYCO+kJztOSsDkz38ik7ajRxxiOGiuwCLJOZyswqk
-PAtcSE6F5KCdlBz214d+ii+iJoerLkM1GeJEegImEO+3DbVK4/AFrHLX5iSVdSOtsnM0pgR7lpWR
+PAtcSE6F5KCdlBz214d+ii+iJoerLkM1GeJEegImEO+bVK4/AFrHLX5iSVdSOtsnM0pgR7lpWR
 LXmZBZKfky8l2WVS4gfwRztVTGGKy8vK5aG998tRMNdHjhxXJyGGMTjWwBac8CNHjqlm2r37DueB
 WvyMnSMApgBQICZhVhKZ5BgEwHwQ/FJ7kwCdCxfO4Q1R/LGauP5mMMH4ZSDYJ69dflHevPKqfDgO
 nmRmRPzTmWoOqdJn/KQXuTohsVGYL5icA72TOijV/kWybv4meXD5Xtm+4D4IDbgFXc28tNns1EPf
@@ -1663,7 +1373,7 @@ BhC5hjjoI8FR6RzpQMjVhIzS3TfVLe1TLS5WQh6GHhDNFi3VNLRNjiwprHO9cqDrulJj55X6kQcC
 BdmFkpeVJ9MTtPnxTngtsHFX/85BBvvF0x4LFlRLQWEBqPyxpMR0en8TE+OaBzyXsHgCRnZ4nPnB
 KQfFlVCFLrZiFr2xW6Ea2yHSnNVRmJWMTOka6NaJrSteqVohrSlyY6SuHvkYIO2tVbtlODSi5F5O
 BtyxTL6w58WPkACwyvLylXpLYgGSZ10jV6V3qhcYgq03H0QZEmpnmKDyQLnUFICe1+NGhcXOngRe
-QZqPtksvqJbYPBFeKRumLVt3Dgq4lWFpm2xRTWueMM93goKzs6ezZGmRE1p8pPyQrs7ZgmItdXG0
+QZqPtksvqJbYPBFeKRumLVtgq4lWFpm2xRTWueMM93goKzs6ezZGmRE1p8pPyQrs7ZgmItdXG0
 hOUYDFOTgahLpyR1/BjTckFYT2Co33QrbAa2zOYrHzIMIi1xF4NqL9AeDCJe72C+cKpHZN8x+oG5
 z6ZZ8KKdpdDkYRLzAOwGUlxRfkjXsDPYJt8+93X5/I7fwd9kCGcPiilQhvURnFP8PyMPrXxMHlix
 Fx4F3F91QTmsXEYJI8SwAZuEdnRCWCYik/ASeDUSfUbZU73PYADKCqqkLN/yQ9Mjp3TDY2u1e7wL
@@ -1696,7 +1406,7 @@ nQNhWzX21j0mF7rPybeATYIFVtLKx6ix2mGuMq5M82mUXIMWyEQG3UhkUF5ve0GOdhyS7YvulMdX
 PyWbyjbDytHmpxcUxSxU7W6s24aQGQdiLA/ToRSYRqst9YENz88pkA4IVH9Gtw5tmNwPYkN0EyfB
 E40BkA4FhxDPuSqXgavODZ+WkWmYHkRnFXLietTmmmKBvlPLsJTFqvx1EJZ7Y43smGqXkalBsNmI
 srOcl64laiKb0Ez06bkz35TXzr2krnjiwXaGEXClcAfDQbCw4wCxKFmG8EUkA6EUBGkDCH8wOm2j
-7w2PmTm60wt9tfKp1T+nlIU3dobdZo/jOKj9dBNNjXAtQi5RsDh+qYd3K02i1yly79jqZvgeeRlA
+7w2PmTm60wt9tfKp1T+nlIUobdZo/jOKj9dBNNjXAtQi5RsDh+qYd3K02i1yly79jqZvgeeRlA
 H/9m668IiGZ5pelliWZjGwRzPzFgBLBK5OnoORcQq2Mag6BJ1fk5MhwZkOfavyGHet6RRxZ/XJ5e
 +SmpQt6rrR4mRtO00RWmOHAADNnzsw6ASmbXxyFAfHRyA7nILWmWL7z5O4o5SIppTTAcjJKGZzBt
 SJEgb8F+qIuKjuYioqwrXgWTTDCCdJrdR1ecuGZG9jY8KlW51TGMR3A7Oj2mC4UCrTsc1NyZyg/7
@@ -1726,7 +1436,7 @@ SBVdW7AB9GQuQgYIAuIeYZTzGpkalp5wF4i/YbX1qeaICy8DbXmy4RPyxMJnpDi/xMyfDhS9aO6c
 YIpDIpSda0mInEO5jhFs3WDU2ANIXAzl2Gi/bv26ub+Y8AlzbVMZXua2UOhZ11fH0xhcJ0kxE2uj
 blnwVLcM7NFGk4FlWqHHSqJcRFa1PLn0Z+QuuJvvtLwlL1z8vpzvPyGRLOToIqKsGkXJPNtcroJH
 UIhw/IHO/UjGbpJlAM/OAoEUm4In1GbpAUkm30wUCbGsMLP8uQXFKlo7jji2enRyXNVJupwFfhQv
-zJ2HFVwjS8vrwIauk+XzVsYnSHE1ATZvQaniLwFpB78SZK4xvMI4TjX3OYrqBA0Va+T3dv8XuPeF
+zJ2HFVwjS8vrwIauk+XzVsYnSHE1ATZvQaniLwFpB78SZK4xvMI4TjX3OYrqBA0Va+Tv8XuPeF
 mlPL/oXAqUzARb40eFGeO//3crT3ffExYUpDprahbhrcDvcdn287K88sy3E4yQhPxUTaU09S0uMe
 T1MMoHTGmbPnTdO57zDIyu9v27pFCrVQksV+Zh82plaJk1tCzOx7IQM2pBAbzbSalsNGbhOM2hsn
 mHZlW6U2aV4NM89up2K30kCFPFH307KzZre8ePk5ef7DZ+UqclEyWcpBwaRttuJ+IiWfwFv0TXTJ
@@ -1737,7 +1447,7 @@ jAV/tJk4n5O/aeMGVNZabg1PnayE/lPohodRGVSjPY5lx3u8NvdIm7CpBOkPGtf41xMk0HbdGb2v
 BBwz1tLcW0tFaNd8UpG9QH6u4XOyuWK7fPXgl+Tc2Gnx59J7MBVOGaA3okVl8F5TX6NIffz27WNt
 MohEZtvLa/f2+sqSWflA5XfV3a/k2U0flAWukDTxEy8M4SU2TYbGQPq12NB4ds7dkOdQwy4srdV3
 1ISph0RAbd6NDyq8Knux/NK2X5e2169Iawj9RIoBs/syoam5YPyFGfJS+z/I7U075aFlj1s3XXqD
-Z0TnZuh98uGHH2qlT/IfnjaYQin62tolsnPXDgWqXkQ5/ViBpmDNOXzHc7nVcKMP3DlQisy6VM8o
+Z0TnZuh98uGHH2qlT/IfnjaYQin62tolsnPXDgWqXkQ5/ViBpmDNOXzHc7nVcKMPlQisy6VM8o
 cBhR2CCiquNRFPVDLGQCdpoPRZhA4bp5SPV7HC5cXsDlUqRRZwR2FBQC4GngAzZyQ/lm+aUdvy6/
 u+9XkKLZiywyRHiZw6JpkbZ3iGioB3uOE5cP9wiNzQxpMNObJW9TGNnFhci4q/KD2KMpwHYS4ieL
 VicuF/e7LmRXaIhTYfh2jsPWsndC7yQSvLDJTmuvxfGefpcaLh9BvRqXw+J9Se/lhCYCl5z3qi9c
@@ -1747,7 +1457,7 @@ VldUL/esvE8HZ9aouSuYB2RwkryBDXuG3IbI7c6qPfL9pmfB6BoGmlHg6lllVIsGJjBCzya8BaCS
 4JFJVskgFkKByHFtfh0AaonZdk09sACfkjZej40KVZfc0056b7eBxxKuUsXG/vbAaCsS1ocRm8qA
 h5d6sOZ+NbP0kE9jh2X8a7qTRuXpEVEL43e8/SDCJi83vSRnxg4g1pVv23zRxEwQcoX+Ijk7clJe
 bXpRnsFGuwQqL61kU1C4cf3NN9/SQj0KajFXjAtVoGTYgw8+oDsNtVVp1JKHdcLQ0gOoqMBYkHee
-CgqqTM3D5vls5kmnOQIT+bBZyMtgimEsARs3ygIXQeQ+FcLGrGsk0JNzoHhwS1AG1bxbofy5rGCl
+CgqqTM5vls5kmnOQIT+bBZyMtgimEsARs3ygIXQeQ+FcLGrGsk0JNzoHhwS1AG1bxbofy5rGCl
 YzQZWjdcQHM04xKjbXJsooLYcNWGRCNvj7PZSQoFZQMkHDifqtJqc++QoUZuYxrlMfRIXP2eHCgp
 50VovXbF75c4FgpXTNz17Wbk0oSiYQhtPCbjnR/BoFbn18j8bGgCtp7OgNMAtt+ZckJptRVfAhZ8
 79JH5MLRE5oianNIDgqb0RC55zbXly8/L/fXPYyk7wq7ln6fzYkLNSeV5Vxff/11fZZBDsp5EQKw
@@ -1755,7 +1465,7 @@ flx1dbXc/8A9munvpVqmm2xLs4zo1lfdOuJc5SjiUyooYHqz3fMO0gpLObLS+4JIB2AVIBfP4NAy
 Z2QCqm1wvBeJ0di8bty8o+itE0pEsZoBQZsOOFW5N0mg1cFKTsNTyIwy0cjSIjNhsDnF5F3yM4ot
 DxYHdxV0j3YqcxvTxhw63opSj3+1RYYTmPLgg6DoNhYz9rP6ZijKNEPcVM0+z05QVaTXonZthYYj
 iDUcYpf24lQ+tH9BUY3uXqT2YGLWNLSFMUUWtvD2XttWfJ/srtkDquDr0hpuBB5gOgIKCUBI+A1S
-CdwKc6DpHXl01Se0KxrfxE+lLDikaB+z3d54802to8sUC5Ju3D5cV18nd9+9R6s2aTv5lUTFyUWq
+CdwKc6DpHXl01Se0KxrfxE+lLDikaB+z54802to8sUC5Ju5cV18nd9+9R6s2aTv5lUTFyUWq
 XbQdhnzcDgXMxtnALCPfpdAoWa4idzpB4XsBbr/oHLrqEpQdOUYXFR0djQ7JmcETsqlqh3EVmi5p
 Um+FbPgL81X4OxlfEyD6l9jkKheGPoQwaW8dpe8GndoFN68pXBxrV/9YH0iwHqUJFbBZ1/UnvZOi
 LFSSwj4hHt5+nIR1N1f/4u+7FT3XiZ4JGkfgsAMazqcpj3aYjrO8WgLU2mIKrWkUdj2mDfVk9cnc
@@ -1771,13 +1481,13 @@ w8jD9b5jOgw0P/if/khibMozXVTjiLegDQuLTMN5INy6nUZqGIR072+s3ILwRoMcG34fkfs4F8pv
 skBxEKGD1y6/JLsW3eXSLn1y8RL2Qu8/qHVrvS2ra9aslq23b9EqTnFB8ajJ2W2gJhkaHtREbE9H
 spplIfYZeeXZb0RQVFhWz1sn1dk10h5t0tojmnVOK6/BM5yAlfR803eRNtApD9Y/BkJsDfYvV2sO
 q7c5jbmhZF+vjrXLwY535aUL35emyCVs5C5Su26xIYA6SEo2GWFEV7fXbgNQtPwWag66zRq0JG5Q
-sk0fX2CgGIBnCYguZt3dkkNNiQ1088glGZsGfe62xSZiNaZ0VmH3YXmegVsPhNuzhlJbZvyUBhmJ
+sk0fX2CgGIBnCYguZtkkNNiQ1088glGZsGfe62xSZiNaZ0VmH3YXmegVsPhNuzhlJbZvyUBhmJ
 z8Ak71p4t5zoO6LbVBNdVi1lkuOT9wfelvNI1FpTuEkOHzwuR08c1UqUdGeZarB580YEBkFipgBf
 A+bJJB4FgDsRR1AnjiaIiiALILYI9D0Jt8Tk7nSeU7pxDlQghXJr5XZpacHGbKQd6LCpiwuop3kX
 oNexn+Xg0NtyCoxhVW6NbjMtycEDlZw2mYAnw2qS3HzWHeqUUCZo8hxEo1EqK4gEIXpJNG+sJhVC
 1lh15mJ5ePkTsVU3GhkBCYb0RbrMGvxjRSdXMRNik4lCPkvAWdyqQwGgwxmMTXGSjf5OAMQ0R1Df
-Nbm1ujXD43DmgMwmS7EeWst3LNwt30YRw/5oFxZm3MXUPUhQzKGxqOw7tl+agd0unsZ2VOQxVlVV
-o0Zcg6zCU0ZYzz/94XSbE1iaqmFWp0SAkMaVGoTl16lRvFLviQHDGx1XzZR7YNXH5K2OV1E3DSmE
+Nbm1ujXD4mgMwmS7EeWst3LNwt30YRw/5oFxZm3MXUPUhQzKGxqOw7tl+agd0unsZ2VOQxVlVV
+o0Zcg6zCU0ZYzz/94XSbE1iaqmFWp0SAkMaVGoTl16lRvFLviQHDGx1XzZR7YNXH5K2OV1ESmE
 iAyTPIsC4WtMB4icKQiZoJTDyD5rCjbK5QmU96RdpU2n60gnANQ4PSi6YKy0yOwzVW8Keg0E+qAK
 p0PT8tjGZ2RVyQabC3zWN96DfNc+rWLpvWcommqHwcd8WeQY0xvt2M2c53oKdxn7q0dateigCoGj
 3zWtgH1AR7n70EsO8yvH5LDLrBsS1LP6BDGueWVLS5fJ+grsnLj6DwjSZWsEW8Ma0D7FkXKpC62V
@@ -1820,10 +1530,10 @@ dS5evKjaLh/CcwUphvkFyWDbGHKaVsvxSFblVgrUu683SYkR2ETtF3tfswQ9BMU2G3VvJsIzu/G+
 eOF/j66P/a13TnaJE9vwwYkPNCZUPs/yhjh2fEg4dxzavTQhFfeerUlTTfytMF0BmpdGrFBGm/lM
 Xx5Ms7vzzl3SgZXuHfwsJycXTKQ9+ZMPr16FvbTv4kFIp06dlobVK/XpEfk4j6aCJoo/q/AEUT4p
 /tVXX5czZ84gkrpK68Bb2l2ysPD9bXhGTnFxiVLZNHvetShEfJybJR1j8xeyy5jdnkxxJ5LLyZFZ
-m7Dk+yWqfZuMZEAdEwhlVBNDHYmCYdtsTUjjGMN+95K5ExjfFMzuTfK58x9ifM7KurXxR93de+89
+m7Dk+yWqfZuMZEAdEwhlVBNDHYmCYdtsTUjjGMN+95K5ExjfFMzuTfK58x9ifM7KurXxR9e+89
 snbtGn0glR3sU3qTm2riEwU0Nok/4i8BFuwjadSFZ9e8+dZbyMK6XbVGFTLGA0hxjEu+lZBSRpLl
 qHBQIKwcJiKoSrpxQmz3oa0CO4hZGP1kdSWaqPgWvuTWL8AzjT38xOt545o4ifX19YpRmLXG+zDx
-uLOzUzXOPKxIbgZnmzhY3d09yNNp0fNoLmkWmc/a0XFVzSYfUE4zd+7cOU0qYqXqgQFUT8DDnZjY
+uLOzUzXOPKxIbgZnmzhY09yNNp0fNoLmkWmc/a0XFVzSYfUE4zd+7cOU0qYqXqgQFUT8DDnZjY
 TCKtAZlppAGa8cAEPhybJjECPEYTSHPZgEfqsm8aL4UmZjuoIbnXePny5aj9MoGHondgy2pYqvG8
 5lw8v6e1BcWKcP/KStZOmaebxd55510dWy68mpqFmlZAzcKN+YQHihdxEz5299IlZBXiSR4LEVNa
 Bk3Eg3u9zp/7UKEBHwvDtvH1UR4IsGbqTTuudsnJk2fkKnI9N2xYJ2vWNGhnEg+TXj7F3KLFFLAQ
